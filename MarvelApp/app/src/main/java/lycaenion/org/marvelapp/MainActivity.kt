@@ -1,30 +1,39 @@
 package lycaenion.org.marvelapp
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 import kotlinx.android.synthetic.main.activity_main.*
 import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
+import lycaenion.org.marvelapp.models.SearchResultCharacter
+import lycaenion.org.marvelapp.recyclerViewAdapters.CharactersViewAdapter
 
 class MainActivity : AppCompatActivity() {
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+
+        var adapter : CharactersViewAdapter
 
         MarvelCharacterHandler.getAllCharacters().observeOn(AndroidSchedulers.mainThread()).subscribe{
-            data -> println("hello " + data.data.results[0].name)
+            data -> initRecyclerViw(this, data.data.results)
+            println(data.data.results.size)
+
         }
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -41,5 +50,12 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun initRecyclerViw(context : Context, characters : Array<SearchResultCharacter>){
+        val recyclerView : RecyclerView = findViewById(R.id.character_recycler_view)
+        val adapter = CharactersViewAdapter(context, characters)
+        recyclerView.adapter  = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
     }
 }
