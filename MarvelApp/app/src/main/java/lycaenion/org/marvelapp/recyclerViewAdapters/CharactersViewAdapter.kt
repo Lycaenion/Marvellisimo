@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.layout_listitem.view.*
@@ -32,12 +34,12 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
 
         viewHolder.imageName.text = searchResultCharacters[position].name
 
-
     }
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
        val imageName : TextView = view.search_character_name
         val image : CircleImageView = view.search_thumbnail
+        val parentLayout : RelativeLayout = view.parent_layout
     }
 
 

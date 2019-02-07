@@ -1,18 +1,16 @@
-package lycaenion.org.marvelapp
+package lycaenion.org.marvelapp.activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
-import io.reactivex.android.schedulers.AndroidSchedulers
-
 import kotlinx.android.synthetic.main.activity_main.*
-import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
+
+import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.models.SearchResultCharacter
 import lycaenion.org.marvelapp.recyclerViewAdapters.CharactersViewAdapter
 
@@ -25,13 +23,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var adapter : CharactersViewAdapter
+
+        fab.setOnClickListener{view ->
+            var intent = Intent(this, CharacterActivity::class.java)
+            intent.putExtra("id",1009546)
+            startActivity(intent)
+        }
+
+
+
+        /*var adapter : CharactersViewAdapter
 
         MarvelCharacterHandler.getAllCharacters().observeOn(AndroidSchedulers.mainThread()).subscribe{
             data -> initRecyclerViw(this, data.data.results)
             println(data.data.results.size)
 
-        }
+        }*/
 
 
     }

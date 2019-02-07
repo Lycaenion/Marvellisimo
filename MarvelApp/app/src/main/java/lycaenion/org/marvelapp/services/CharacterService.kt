@@ -11,9 +11,10 @@ interface CharacterService{
     @GET("characters")
     fun getAllCharacters() : Single<APIResponseSearchCharacter>
 
-    /*@GET("characters/{characterId}")
-    fun getCharacter(@Path("characterId") characterId : String) : APIResponseCharacter
+    @GET("characters/{characterId}")
+    fun getCharacter(@Path("characterId") characterId : Int) : Single<APIResponseCharacter>
 
+    /*
     @GET("characters")
     fun searchCharacter(@Query("nameStartsWith") characterName : String) : APIResponseSearchCharacter*/
 }

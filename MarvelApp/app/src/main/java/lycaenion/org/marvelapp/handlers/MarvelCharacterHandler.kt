@@ -3,6 +3,7 @@ package lycaenion.org.marvelapp.handlers
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import lycaenion.org.marvelapp.models.APIResponseCharacter
 import lycaenion.org.marvelapp.models.APIResponseSearchCharacter
 import lycaenion.org.marvelapp.services.CharacterService
 import okhttp3.Interceptor
@@ -53,5 +54,9 @@ object MarvelCharacterHandler{
 
         return service.getAllCharacters().subscribeOn(Schedulers.io())
 
+    }
+
+    fun getCharacter( id : Int) : Single<APIResponseCharacter>{
+        return service.getCharacter(id).subscribeOn(Schedulers.io())
     }
 }
