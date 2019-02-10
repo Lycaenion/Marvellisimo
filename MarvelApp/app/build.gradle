@@ -53,4 +53,7 @@ dependencies {
 
     //circle imageview
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    //fabMenu
+    implementation 'com.github.clans:fab:1.6.4'
 }

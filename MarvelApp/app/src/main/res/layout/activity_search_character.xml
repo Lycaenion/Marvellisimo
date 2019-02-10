@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,14 +7,56 @@
         android:layout_height="match_parent"
         tools:context=".activities.SearchCharacter">
 
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+
         <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:id="@+id/character_recycler_view">
         </android.support.v7.widget.RecyclerView>
-    </RelativeLayout>
 
 
 
-</LinearLayout>
+        <com.github.clans.fab.FloatingActionMenu
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/floatingActionMenu"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="16dp"
+                app:menu_showShadow="true"
+                app:menu_fab_label=""
+                app:menu_openDirection="up"
+                app:menu_icon="@drawable/fab_add"
+                android:layout_gravity="bottom|right"
+        >
+
+            <com.github.clans.fab.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_label="search"
+                    app:fab_size="mini"
+                    android:id="@+id/floatingItemOne"
+                    android:src="@drawable/fab_add"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_label="Characters"
+                    app:fab_size="mini"
+                    android:id="@+id/floatingItemTwo"
+                    android:src="@drawable/fab_add"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_label="comics"
+                    app:fab_size="mini"
+                    android:id="@+id/floatingItemThree"
+                    android:src="@drawable/fab_add"/>
+
+
+        </com.github.clans.fab.FloatingActionMenu>
+
+
+
+</android.support.design.widget.CoordinatorLayout>
