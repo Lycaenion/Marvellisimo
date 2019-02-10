@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
 
 
         fab.setOnClickListener{view ->
-            var intent = Intent(this, CharacterActivity::class.java)
-            intent.putExtra("id",1009546)
+            var intent = Intent(this, SearchCharacter::class.java)
+            //intent.putExtra("id",1009546)
             startActivity(intent)
         }
 
@@ -59,10 +59,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun initRecyclerViw(context : Context, characters : Array<SearchResultCharacter>){
+    /*fun initRecyclerViw(context : Context, characters : Array<SearchResultCharacter>){
         val recyclerView : RecyclerView = findViewById(R.id.character_recycler_view)
         val adapter = CharactersViewAdapter(context, characters)
         recyclerView.adapter  = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-    }
+    }*/
 }

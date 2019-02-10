@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface CharacterService{
     @GET("characters")
-    fun getAllCharacters() : Single<APIResponseSearchCharacter>
+    fun getAllCharacters(@Query ("offset") offset : Int) : Single<APIResponseSearchCharacter>
 
     @GET("characters/{characterId}")
     fun getCharacter(@Path("characterId") characterId : Int) : Single<APIResponseCharacter>

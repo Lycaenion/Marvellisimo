@@ -50,9 +50,9 @@ object MarvelCharacterHandler{
         chain.proceed(newRequest)
     }
 
-    fun getAllCharacters() : Single<APIResponseSearchCharacter>{
+    fun getAllCharacters(offset : Int) : Single<APIResponseSearchCharacter>{
 
-        return service.getAllCharacters().subscribeOn(Schedulers.io())
+        return service.getAllCharacters(offset).subscribeOn(Schedulers.io())
 
     }
 
