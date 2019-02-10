@@ -2,6 +2,7 @@ package lycaenion.org.marvelapp.recyclerViewAdapters
 
 import android.content.Context
 import android.content.Intent
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -30,10 +31,21 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
         return searchResultCharacters.size
     }
 
+    fun addCharacters(characterList : List<SearchResultCharacter>){
+
+        //if this function stops working, add currentSize : Int to input parameters
+
+        searchResultCharacters = characterList
+
+        //notifyItemRangeChanged(currentSize-1, searchResultCharacters.size)
+
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         Glide.with(context)
             .asBitmap()
-            .load(searchResultCharacters[position].thumbnail.path+ "." +searchResultCharacters[position].thumbnail.extension)
+            .load(searchResultCharacters[position].thumbnail.path+ "." + searchResultCharacters[position].thumbnail.extension)
             .into(viewHolder.image)
 
         viewHolder.imageName.text = searchResultCharacters[position].name
@@ -52,7 +64,6 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener{
        val imageName : TextView = view.search_character_name
        val image : CircleImageView = view.search_thumbnail
-       val parentLayout : RelativeLayout = view.parent_layout
 
         private var itemClickListener : OnItemClickListener? = null
 

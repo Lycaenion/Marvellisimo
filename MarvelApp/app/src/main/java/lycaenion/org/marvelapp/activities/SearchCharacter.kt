@@ -15,46 +15,57 @@ class SearchCharacter : AppCompatActivity() {
 
     private var characterList : List<SearchResultCharacter> = emptyList()
     private lateinit var scrollListener : EndlessRecyclerViewScrollListener
+    private lateinit var adapter : CharactersViewAdapter
+    private lateinit var recyclerView: RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_character)
-        val recyclerView : RecyclerView = findViewById(R.id.character_recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        initAdapter(recyclerView)
-        initScrollListner(LinearLayoutManager(this), recyclerView)
+
+
+        var linearLayoutManager = LinearLayoutManager(this)
+        recyclerView = findViewById(R.id.character_recycler_view)
+        recyclerView.layoutManager = linearLayoutManager
+        initAdapter()
+        initScrollListener(linearLayoutManager)
     }
 
-    private fun initAdapter(recyclerView : RecyclerView){
+    private fun initAdapter(){
 
         MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
             response -> characterList = characterList + response.data.results.asList()
-            var adapter = CharactersViewAdapter(this, characterList)
+            adapter = CharactersViewAdapter(this, characterList)
             recyclerView.adapter = adapter
         })
 
 
     }
 
-    fun initScrollListner(linearLayoutManager: LinearLayoutManager, recyclerView : RecyclerView){
+    private fun initScrollListener(linearLayoutManager: LinearLayoutManager){
         scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager){
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                addCharacters(characterList.size + 1, recyclerView)
+                addCharacters(page * 20)
             }
         }
+        println(characterList.size)
         recyclerView.addOnScrollListener(scrollListener)
     }
 
-    fun addCharacters(offset : Int, recyclerView : RecyclerView){
+    fun addCharacters(offset : Int){
+        //if this function stops working, add following rows here:
+        //var currentSize : Int
+        //currentSize = adapter.itemCount
+
         if (offset == 0){
             scrollListener.resetState()
             characterList = emptyList()
+            println("offset 0")
         }else{
             MarvelCharacterHandler.getAllCharacters(offset).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 response -> characterList = characterList + response.data.results.asList()
-                var adapter = CharactersViewAdapter(this, characterList)
-                recyclerView.adapter = adapter
+                adapter.addCharacters(characterList)
+                adapter.notifyDataSetChanged()
             })
         }
     }
