@@ -12,6 +12,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".activities.SeriesActivity">
+        </activity>
+        <activity android:name=".activities.CharacterActivity">
+        </activity>
+        <activity android:name=".character">
+        </activity>
         <activity android:name=".activities.SearchCharacter">
         </activity>
         <activity android:name=".activities.CharacterActivity">

@@ -11,6 +11,4 @@ class Character(@SerializedName("id")
                 @SerializedName("description")
                 val description : String,
 
-                val thumbnail : Thumbnail,
-
-                val comicList : ComicList)
+                val thumbnail : Thumbnail)
