@@ -59,4 +59,8 @@ object MarvelCharacterHandler{
     fun getCharacter( id : Int) : Single<APIResponseCharacter>{
         return service.getCharacter(id).subscribeOn(Schedulers.io())
     }
+
+    fun searchCharacter(name : String) : Single<APIResponseSearchCharacter>{
+        return service.searchCharacter(name).subscribeOn(Schedulers.io())
+    }
 }
