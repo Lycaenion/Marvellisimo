@@ -4,6 +4,7 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import lycaenion.org.marvelapp.models.APIResponseCharacter
+import lycaenion.org.marvelapp.models.APIResponseCharacterSeries
 import lycaenion.org.marvelapp.models.APIResponseSearchCharacter
 import lycaenion.org.marvelapp.services.CharacterService
 import okhttp3.Interceptor
@@ -51,13 +52,15 @@ object MarvelCharacterHandler{
     }
 
     fun getAllCharacters(offset : Int) : Single<APIResponseSearchCharacter>{
-
         return service.getAllCharacters(offset).subscribeOn(Schedulers.io())
-
     }
 
     fun getCharacter( id : Int) : Single<APIResponseCharacter>{
         return service.getCharacter(id).subscribeOn(Schedulers.io())
+    }
+
+    fun getSeriesWithCharacter( id : Int, offset : Int) : Single<APIResponseCharacterSeries>{
+        return service.getCharacterSeries(id, offset).subscribeOn(Schedulers.io())
     }
 
     fun searchCharacter(name : String) : Single<APIResponseSearchCharacter>{

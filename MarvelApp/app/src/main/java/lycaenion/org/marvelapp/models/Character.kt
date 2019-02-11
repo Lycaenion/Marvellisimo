@@ -13,4 +13,5 @@ class Character(@SerializedName("id")
 
                 val thumbnail : Thumbnail,
 
-                val comicList : ComicList)
+                @SerializedName("urls")
+                val urls: Array<Url>)
