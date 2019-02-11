@@ -89,6 +89,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_searchCharacter -> {
                 val toast = Toast.makeText(this, "searchCharacter", Toast.LENGTH_SHORT)
                 toast.show()
+                intent = Intent(this, SearchCharacter::class.java)
+                startActivity(intent)
             }
             R.id.nav_searchSeries -> {
                 val toast = Toast.makeText(this, "searchSeries", Toast.LENGTH_SHORT)
@@ -104,7 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    }
+}
 
 
 
