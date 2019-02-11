@@ -33,22 +33,24 @@ class SearchCharacter : AppCompatActivity() {
         searchView = findViewById(R.id.search_character)
         initAdapter()
         initScrollListener(linearLayoutManager)
-        setTextListner()
+        setTextListener()
     }
 
-    private fun setTextListner(){
+    private fun setTextListener(){
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextChange(newString: String?): Boolean {
-                searchString = newString!!
 
-                if(searchString.equals("")){
-                    scrollListener.resetState()
-                    characterList = emptyList()
-                    adapter.notifyDataSetChanged()
+                if(newString!!.isEmpty()){
+                    searchString = ""
                 }else{
-                    scrollListener.resetState()
-                    characterList = emptyList()
-                    adapter.notifyDataSetChanged()
+                    searchString = newString!!
+                }
+                
+                if(searchString.equals("")){
+                    resetAdapter()
+                    addCharacters(0, searchString)
+                }else{
+                    resetAdapter()
                     addCharacters(0, searchString)
                 }
                 return false
@@ -58,16 +60,20 @@ class SearchCharacter : AppCompatActivity() {
                 searchString = query!!
 
                 if(searchString.equals("")){
-                    scrollListener.resetState()
-                    characterList = emptyList()
-                    adapter.notifyDataSetChanged()
+                    resetAdapter()
+                    addCharacters(0, searchString)
                 }else{
                     addCharacters(0, searchString)
                 }
                 return false
-                return false
             }
         })
+    }
+
+    private fun resetAdapter(){
+        scrollListener.resetState()
+        characterList = emptyList()
+        adapter.notifyDataSetChanged()
     }
 
     private fun initAdapter(){
@@ -92,12 +98,15 @@ class SearchCharacter : AppCompatActivity() {
 
     fun addCharacters(offset : Int, search: String){
 
-
         if(search.equals("")){
             if (offset == 0){
                 scrollListener.resetState()
                 characterList = emptyList()
-                adapter.notifyDataSetChanged()
+                MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                        response -> characterList = characterList + response.data.results.asList()
+                    adapter.addCharacters(characterList)
+                    adapter.notifyDataSetChanged()
+                })
             }else{
                 //if this function stops working, add following rows here:
                 //var currentSize : Int
