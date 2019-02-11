@@ -75,6 +75,8 @@ class CharacterActivity : AppCompatActivity() {
                         startActivity(openURL)
                     }
 
+                    btn_learn_more.visibility = View.VISIBLE
+
                     break
 
                 }else{
