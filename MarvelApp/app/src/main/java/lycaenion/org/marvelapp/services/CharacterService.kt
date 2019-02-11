@@ -18,7 +18,6 @@ interface CharacterService{
     @GET("characters/{characterId}/series")
     fun getCharacterSeries(@Path("characterId") characterId: Int, @Query("offset") offset : Int) : Single<APIResponseCharacterSeries>
 
-    /*
     @GET("characters")
-    fun searchCharacter(@Query("nameStartsWith") characterName : String) : APIResponseSearchCharacter*/
+    fun searchCharacter(@Query("nameStartsWith") characterName : String) : Single<APIResponseSearchCharacter>
 }
