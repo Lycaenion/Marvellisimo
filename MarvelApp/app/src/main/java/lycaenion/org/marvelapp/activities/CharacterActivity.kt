@@ -17,9 +17,7 @@ class CharacterActivity : AppCompatActivity() {
 
         var character : Character
 
-        var id : Int
-
-        id = intent.extras.getInt("id")
+        var id = intent.extras.getInt("id")
 
         MarvelCharacterHandler.getCharacter(id).observeOn(AndroidSchedulers.mainThread()).subscribe(){
             data -> character = data.data.results[0]
