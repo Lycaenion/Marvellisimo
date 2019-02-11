@@ -1,9 +1,14 @@
 package lycaenion.org.marvelapp.activities
 
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_character.*
@@ -53,10 +58,37 @@ class CharacterActivity : AppCompatActivity() {
         val imgUrl = character.thumbnail.path + "."+ character.thumbnail.extension
 
         character_name.text = character.name
+
+        text_series_header.text = "Series where " +character.name +" appears"
         Glide.with(this)
             .asBitmap()
             .load(imgUrl)
             .into(character_thumbnail)
+
+        val btn_learn_more = findViewById<Button>(R.id.wiki_button)
+
+        if(character.urls.size != null){
+            for(i in character.urls.indices) {
+                if (character.urls[i].type.equals("wiki")) {
+
+                    btn_learn_more.setOnClickListener {
+
+                        println("Url : " + character.urls[i].url)
+                        var openURL = Intent(Intent.ACTION_VIEW)
+                        openURL.data = Uri.parse(character.urls[i].url)
+                        startActivity(openURL)
+                    }
+
+                } else {
+                    btn_learn_more.visibility = View.GONE
+                }
+            }
+
+
+        }else{
+            btn_learn_more.visibility = View.GONE
+        }
+
     }
 
     private fun initScrollListener(linearLayoutManager: LinearLayoutManager, id : Int){

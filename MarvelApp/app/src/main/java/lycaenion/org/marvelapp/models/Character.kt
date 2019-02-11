@@ -11,4 +11,7 @@ class Character(@SerializedName("id")
                 @SerializedName("description")
                 val description : String,
 
-                val thumbnail : Thumbnail)
+                val thumbnail : Thumbnail,
+
+                @SerializedName("urls")
+                val urls: Array<Url>)
