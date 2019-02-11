@@ -47,10 +47,6 @@ class CharacterActivity : AppCompatActivity() {
         initAdapter(id)
         initScrollListener(linearLayoutManager, id)
 
-
-
-
-
     }
 
     fun setCharacterView(character : Character){
@@ -67,9 +63,9 @@ class CharacterActivity : AppCompatActivity() {
 
         val btn_learn_more = findViewById<Button>(R.id.wiki_button)
 
-        if(character.urls.size != null){
             for(i in character.urls.indices) {
                 if (character.urls[i].type.equals("wiki")) {
+                    println("Checked wiki")
 
                     btn_learn_more.setOnClickListener {
 
@@ -79,15 +75,12 @@ class CharacterActivity : AppCompatActivity() {
                         startActivity(openURL)
                     }
 
-                } else {
-                    btn_learn_more.visibility = View.GONE
+                    break
+
+                }else{
+                    btn_learn_more.visibility = View.INVISIBLE
                 }
             }
-
-
-        }else{
-            btn_learn_more.visibility = View.GONE
-        }
 
     }
 
