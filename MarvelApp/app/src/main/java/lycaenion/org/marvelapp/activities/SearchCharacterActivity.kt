@@ -41,8 +41,6 @@ class SearchCharacter : AppCompatActivity() {
             override fun onQueryTextChange(newString: String?): Boolean {
                 searchString = newString!!
 
-                println("Search: " + searchString)
-
                 if(searchString.equals("")){
                     scrollListener.resetState()
                     characterList = emptyList()
@@ -72,10 +70,6 @@ class SearchCharacter : AppCompatActivity() {
         })
     }
 
-    private fun checkSearch() : Boolean{
-        return searchString.equals("")
-    }
-
     private fun initAdapter(){
 
         MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
@@ -93,7 +87,6 @@ class SearchCharacter : AppCompatActivity() {
                 addCharacters(page * 20, searchString)
             }
         }
-        println(characterList.size)
         recyclerView.addOnScrollListener(scrollListener)
     }
 
@@ -105,8 +98,10 @@ class SearchCharacter : AppCompatActivity() {
                 scrollListener.resetState()
                 characterList = emptyList()
                 adapter.notifyDataSetChanged()
-                println("offset 0")
             }else{
+                //if this function stops working, add following rows here:
+                //var currentSize : Int
+                //currentSize = adapter.itemCount
                 MarvelCharacterHandler.getAllCharacters(offset).observeOn(AndroidSchedulers.mainThread()).subscribe({
                         response -> characterList = characterList + response.data.results.asList()
                     adapter.addCharacters(characterList)
@@ -124,9 +119,7 @@ class SearchCharacter : AppCompatActivity() {
 
 
         }
-        //if this function stops working, add following rows here:
-        //var currentSize : Int
-        //currentSize = adapter.itemCount
+
 
 
     }
