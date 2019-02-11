@@ -4,7 +4,16 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
+
 android {
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
     compileSdkVersion 28
     defaultConfig {
         applicationId "lycaenion.org.marvelapp"
@@ -48,5 +57,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     //circle imageview
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+
 
 }

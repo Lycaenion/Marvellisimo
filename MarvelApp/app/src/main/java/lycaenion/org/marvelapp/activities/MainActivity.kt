@@ -1,22 +1,13 @@
 package lycaenion.org.marvelapp.activities
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import com.bumptech.glide.Glide
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 import lycaenion.org.marvelapp.R
-import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
-import lycaenion.org.marvelapp.models.Character
-import lycaenion.org.marvelapp.models.SearchResultCharacter
-import lycaenion.org.marvelapp.recyclerViewAdapters.CharactersViewAdapter
 
 class MainActivity : AppCompatActivity() {
 

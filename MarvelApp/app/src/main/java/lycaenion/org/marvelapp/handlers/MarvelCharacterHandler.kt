@@ -1,15 +1,13 @@
 package lycaenion.org.marvelapp.handlers
 
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import lycaenion.org.marvelapp.models.APIResponseCharacter
-import lycaenion.org.marvelapp.models.APIResponseCharacterSeries
-import lycaenion.org.marvelapp.models.APIResponseSearchCharacter
+import lycaenion.org.marvelapp.models.characterModels.APIResponseCharacter
+import lycaenion.org.marvelapp.models.characterModels.APIResponseCharacterSeries
+import lycaenion.org.marvelapp.models.characterModels.APIResponseSearchCharacter
 import lycaenion.org.marvelapp.services.CharacterService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

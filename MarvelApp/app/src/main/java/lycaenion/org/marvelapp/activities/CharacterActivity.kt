@@ -8,13 +8,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_character.*
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
-import lycaenion.org.marvelapp.models.Character
+import lycaenion.org.marvelapp.models.characterModels.Character
 import lycaenion.org.marvelapp.models.Series
 import lycaenion.org.marvelapp.recyclerViewAdapters.CharacterSeriesViewAdapter
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener

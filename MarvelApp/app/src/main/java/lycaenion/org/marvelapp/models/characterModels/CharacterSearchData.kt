@@ -1,4 +1,4 @@
-package lycaenion.org.marvelapp.models
+package lycaenion.org.marvelapp.models.characterModels
 
 import com.google.gson.annotations.SerializedName
 

@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.layout_listitem.view.*
 import lycaenion.org.marvelapp.OnItemClickListener
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.activities.CharacterActivity
-import lycaenion.org.marvelapp.models.SearchResultCharacter
+import lycaenion.org.marvelapp.models.characterModels.SearchResultCharacter
 
 class CharactersViewAdapter(var context : Context, var searchResultCharacters : List<SearchResultCharacter> ) : RecyclerView.Adapter<CharactersViewAdapter.ViewHolder>(){
 
