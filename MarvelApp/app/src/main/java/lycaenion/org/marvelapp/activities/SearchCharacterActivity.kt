@@ -57,7 +57,12 @@ class SearchCharacter : AppCompatActivity() {
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchString = query!!
+
+                if(query!!.isEmpty()){
+                    searchString = ""
+                }else{
+                    searchString = query!!
+                }
 
                 if(searchString.equals("")){
                     resetAdapter()
@@ -102,6 +107,7 @@ class SearchCharacter : AppCompatActivity() {
             if (offset == 0){
                 scrollListener.resetState()
                 characterList = emptyList()
+                adapter.notifyDataSetChanged()
                 MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
                         response -> characterList = characterList + response.data.results.asList()
                     adapter.addCharacters(characterList)
