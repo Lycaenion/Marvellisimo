@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:usesCleartextTraffic="true">
         <activity android:name=".activities.SearchCharacter"
-                   android:theme="@style/AppTheme.NoActionBar" >
+                  android:label="MarvelApp">
         </activity>
         <activity android:name=".activities.CharacterActivity">
         </activity>

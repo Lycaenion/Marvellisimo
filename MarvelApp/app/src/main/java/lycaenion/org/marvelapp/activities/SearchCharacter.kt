@@ -32,7 +32,7 @@ class SearchCharacter : AppCompatActivity(), NavigationView.OnNavigationItemSele
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_character)
-        //setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar)
 
         val toggle = ActionBarDrawerToggle(this, drawer_layout_character_search, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout_character_search.addDrawerListener(toggle)
@@ -121,7 +121,6 @@ class SearchCharacter : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 toast.show()
             }
         }
-
         drawer_layout_character_search.closeDrawer(GravityCompat.START)
         return true
     }
