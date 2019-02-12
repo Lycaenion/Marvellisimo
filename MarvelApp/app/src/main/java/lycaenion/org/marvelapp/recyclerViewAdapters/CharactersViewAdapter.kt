@@ -22,8 +22,6 @@ import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
 
 class CharactersViewAdapter(var context : Context, var searchResultCharacters : List<SearchResultCharacter> ) : RecyclerView.Adapter<CharactersViewAdapter.ViewHolder>(){
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_listitem, parent, false)
@@ -85,9 +83,8 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
                 val intent = Intent(context, CharacterActivity::class.java)
                 intent.putExtra("id", searchResultCharacters[position].id)
                 context.startActivity(intent)
-                println("I am here")
             }
-        } )
+        })
 
     }
 

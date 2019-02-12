@@ -132,11 +132,6 @@ class SearchCharacter : AppCompatActivity() {
                 println(characterList.size)
                 adapter.notifyDataSetChanged()
             })
-
-
         }
-
-
-
     }
 }

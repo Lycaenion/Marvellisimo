@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }*/
 
         fab.setOnClickListener{view ->
-            var intent = Intent(this, SearchCharacter::class.java)
+            var intent = Intent(this, FavoriteCharactersActivity::class.java)
             //intent.putExtra("id",1009546)
             startActivity(intent)
         }
