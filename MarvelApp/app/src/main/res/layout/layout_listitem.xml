@@ -19,11 +19,6 @@
               android:layout_centerVertical="true"
               android:layout_marginStart="130dp"
               android:textSize="18sp" android:layout_marginTop="30dp"/>
-    <ImageButton
-            android:layout_width="51dp"
-            android:layout_height="45dp" card_view:srcCompat="@drawable/ic_favorite_heart"
-            android:id="@+id/favouriteCharacterBtn" android:layout_marginStart="300dp" android:layout_marginTop="15dp"
-            android:contentDescription="@string/button_for_adding_to_favouritelist" android:padding="0dp"/>
 
 
 </android.support.v7.widget.CardView>

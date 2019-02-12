@@ -16,11 +16,7 @@
         </activity>
         <activity android:name=".activities.CharacterActivity">
         </activity>
-        <activity android:name=".character">
-        </activity>
         <activity android:name=".activities.SearchCharacter">
-        </activity>
-        <activity android:name=".activities.CharacterActivity">
         </activity>
         <activity
                 android:name=".activities.MainActivity"
