@@ -47,11 +47,9 @@ class SearchCharacter : AppCompatActivity() {
                 }
                 
                 if(searchString.equals("")){
-                    resetAdapter()
                     addCharacters(0, searchString)
                     resetAdapter()
                 }else{
-                    resetAdapter()
                     addCharacters(0, searchString)
                     resetAdapter()
                 }
@@ -131,6 +129,7 @@ class SearchCharacter : AppCompatActivity() {
             MarvelCharacterHandler.searchCharacter(search).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 response -> characterList = characterList + response.data.results.asList()
                 adapter.addCharacters(characterList)
+                println(characterList.size)
                 adapter.notifyDataSetChanged()
             })
 
