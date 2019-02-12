@@ -42,11 +42,12 @@ class CharacterActivity : AppCompatActivity() {
 
         id = intent.extras.getInt("id")
 
-        MarvelCharacterHandler.getCharacter(id).observeOn(AndroidSchedulers.mainThread()).subscribe(){
+        MarvelCharacterHandler.getCharacter(id).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 data -> character = data.data.results[0]
             setCharacterView(character)
-        }
+        })
 
+        
         var linearLayoutManager = LinearLayoutManager(this)
         recyclerView = findViewById(R.id.character_series)
         recyclerView.layoutManager = linearLayoutManager

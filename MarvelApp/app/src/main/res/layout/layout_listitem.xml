@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/parent_layout" android:layout_margin="10dp">
+        android:id="@+id/parent_layout"
+        android:padding="10dp" android:layout_margin="5dp" tools:elevation="0dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView android:layout_width="80dp"
+                                                      android:layout_height="80dp"
+                                                      android:id="@+id/search_thumbnail"
+                                                      android:src="@mipmap/ic_launcher"
+                                                      android:layout_marginStart="15dp"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/searchCharacterName"
+                  android:id="@+id/search_character_name"
+                  android:textColor="#000"
+                  android:layout_centerVertical="true"
+                  android:layout_marginStart="15dp"
+                  android:textSize="18sp" android:layout_marginTop="30dp"/>
+        <ImageView
+                android:layout_width="40dp"
+                android:layout_height="37dp" card_view:srcCompat="@drawable/ic_favorite_heart"
+                android:id="@+id/favorite_indicator" android:layout_marginStart="100dp" android:layout_marginTop="20dp"
+                android:contentDescription="@string/indicator_that_the_character_is_a_string_add_to_favorites"
+                android:visibility="invisible"/>
 
-
-    <de.hdodenhof.circleimageview.CircleImageView android:layout_width="80dp"
-                                                  android:layout_height="80dp"
-                                                  android:id="@+id/search_thumbnail"
-                                                  android:src="@mipmap/ic_launcher" android:layout_marginStart="15dp"/>
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="@string/searchCharacterName"
-              android:id="@+id/search_character_name"
-              android:textColor="#000"
-              android:layout_centerVertical="true"
-              android:layout_marginStart="130dp"
-              android:textSize="18sp" android:layout_marginTop="30dp"/>
-    <ImageView
-            android:layout_width="40dp"
-            android:layout_height="37dp" card_view:srcCompat="@drawable/ic_favorite_heart"
-            android:id="@+id/favorite_indicator" android:layout_marginStart="345dp" android:layout_marginTop="20dp"
-            android:contentDescription="@string/indicator_that_the_character_is_a_string_add_to_favorites"
-            android:visibility="invisible"/>
+    </LinearLayout>
 
 
 </android.support.v7.widget.CardView>
