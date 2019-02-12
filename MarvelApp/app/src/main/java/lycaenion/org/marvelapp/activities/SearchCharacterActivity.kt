@@ -8,7 +8,7 @@ import android.widget.SearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
-import lycaenion.org.marvelapp.models.SearchResultCharacter
+import lycaenion.org.marvelapp.models.characterModels.SearchResultCharacter
 import lycaenion.org.marvelapp.recyclerViewAdapters.CharactersViewAdapter
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener
 
@@ -43,15 +43,15 @@ class SearchCharacter : AppCompatActivity() {
                 if(newString!!.isEmpty()){
                     searchString = ""
                 }else{
-                    searchString = newString!!
+                    searchString = newString
                 }
                 
                 if(searchString.equals("")){
-                    resetAdapter()
                     addCharacters(0, searchString)
+                    resetAdapter()
                 }else{
-                    resetAdapter()
                     addCharacters(0, searchString)
+                    resetAdapter()
                 }
                 return false
             }
@@ -129,13 +129,9 @@ class SearchCharacter : AppCompatActivity() {
             MarvelCharacterHandler.searchCharacter(search).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 response -> characterList = characterList + response.data.results.asList()
                 adapter.addCharacters(characterList)
+                println(characterList.size)
                 adapter.notifyDataSetChanged()
             })
-
-
         }
-
-
-
     }
 }

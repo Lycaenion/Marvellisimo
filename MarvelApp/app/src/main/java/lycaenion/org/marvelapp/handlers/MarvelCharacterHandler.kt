@@ -1,15 +1,11 @@
 package lycaenion.org.marvelapp.handlers
 
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import lycaenion.org.marvelapp.models.APIResponseCharacter
-import lycaenion.org.marvelapp.models.APIResponseCharacterSeries
-import lycaenion.org.marvelapp.models.APIResponseSearchCharacter
+import lycaenion.org.marvelapp.models.characterModels.*
 import lycaenion.org.marvelapp.services.CharacterService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object MarvelCharacterHandler{
 
 
-    val service : CharacterService = Retrofit.Builder()
+    private val service : CharacterService = Retrofit.Builder()
         .baseUrl("https://gateway.marvel.com:443/v1/public/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -25,7 +21,7 @@ object MarvelCharacterHandler{
         .build()
         .create(CharacterService::class.java)
 
-    fun getOkHttpClient() : OkHttpClient{
+    private fun getOkHttpClient() : OkHttpClient{
         //val logging = HttpLoggingInterceptor()
         //logging.level = HttpLoggingInterceptor.Level.BODY
 
@@ -38,7 +34,7 @@ object MarvelCharacterHandler{
         return okHttpClient
     }
 
-    fun addHashAndKey() : Interceptor = Interceptor { chain ->
+    private fun addHashAndKey() : Interceptor = Interceptor { chain ->
 
         val params = mapOf("ts" to "1", "apikey" to "106a310a39bc5458faa6c5d83f88c5dd" , "hash" to "55e291925d0578bd9b1ec729de47188f")
 
@@ -52,18 +48,30 @@ object MarvelCharacterHandler{
     }
 
     fun getAllCharacters(offset : Int) : Single<APIResponseSearchCharacter>{
-        return service.getAllCharacters(offset).subscribeOn(Schedulers.io())
+        return service.getAllCharacters(offset).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
+            println("error : ${it.message}")
+            APIResponseSearchCharacter(1, "", CharacterSearchData(emptyArray()))
+        }
     }
 
     fun getCharacter( id : Int) : Single<APIResponseCharacter>{
-        return service.getCharacter(id).subscribeOn(Schedulers.io())
+        return service.getCharacter(id).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
+            println("error: ${it.message}")
+            APIResponseCharacter(1, "", CharacterData(emptyArray()))
+        }
     }
 
     fun getSeriesWithCharacter( id : Int, offset : Int) : Single<APIResponseCharacterSeries>{
-        return service.getCharacterSeries(id, offset).subscribeOn(Schedulers.io())
+        return service.getCharacterSeries(id, offset).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
+            println("error: ${it.message}")
+            APIResponseCharacterSeries(1, "", CharacterSeriesData(emptyArray()))
+        }
     }
 
     fun searchCharacter(name : String) : Single<APIResponseSearchCharacter>{
-        return service.searchCharacter(name).subscribeOn(Schedulers.io())
+        return service.searchCharacter(name).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
+            println("error:  ${it.message}")
+            APIResponseSearchCharacter(1, "", CharacterSearchData(emptyArray()))
+        }
     }
 }

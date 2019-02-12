@@ -1,6 +1,8 @@
-package lycaenion.org.marvelapp.models
+package lycaenion.org.marvelapp.models.characterModels
 
 import com.google.gson.annotations.SerializedName
+import lycaenion.org.marvelapp.models.Thumbnail
+import lycaenion.org.marvelapp.models.Url
 
 class Character(@SerializedName("id")
                 val id: Int,

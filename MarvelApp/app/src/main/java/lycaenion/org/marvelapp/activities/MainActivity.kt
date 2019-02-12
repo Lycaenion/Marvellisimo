@@ -1,22 +1,17 @@
 package lycaenion.org.marvelapp.activities
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import com.bumptech.glide.Glide
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.realm.Realm
+import io.realm.RealmConfiguration
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
 
 import lycaenion.org.marvelapp.R
-import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
-import lycaenion.org.marvelapp.models.Character
-import lycaenion.org.marvelapp.models.SearchResultCharacter
-import lycaenion.org.marvelapp.recyclerViewAdapters.CharactersViewAdapter
+import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,12 +19,30 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        //var realm : Realm
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        /*Realm.init(this)
+
+        val config = RealmConfiguration.Builder()
+            .schemaVersion(1)
+            .name("favoriteCharacters.realm")
+            .build()
+
+
+        realm = Realm.getInstance(config)
+
+        var list : RealmResults<FavoriteCharacter> = realm.where(FavoriteCharacter::class.java).findAll()
+        //realm.close()
+
+        for( i in list.indices){
+            println(list[i]?.name + " is in favorite characters db")
+        }*/
 
         fab.setOnClickListener{view ->
-            var intent = Intent(this, SearchCharacter::class.java)
+            var intent = Intent(this, FavoriteCharactersActivity::class.java)
             //intent.putExtra("id",1009546)
             startActivity(intent)
         }

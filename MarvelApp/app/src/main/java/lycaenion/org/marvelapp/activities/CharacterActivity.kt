@@ -8,14 +8,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.realm.Realm
+import io.realm.RealmConfiguration
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_character.*
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
-import lycaenion.org.marvelapp.models.Character
+import lycaenion.org.marvelapp.models.characterModels.Character
 import lycaenion.org.marvelapp.models.Series
+import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
 import lycaenion.org.marvelapp.recyclerViewAdapters.CharacterSeriesViewAdapter
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener
 
@@ -25,10 +28,13 @@ class CharacterActivity : AppCompatActivity() {
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var adapter: CharacterSeriesViewAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var realm : Realm
+    private lateinit var btnFavorite : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character)
+        btnFavorite = findViewById(R.id.add_favorite_btn)
 
         var character : Character
 
@@ -36,11 +42,12 @@ class CharacterActivity : AppCompatActivity() {
 
         id = intent.extras.getInt("id")
 
-        MarvelCharacterHandler.getCharacter(id).observeOn(AndroidSchedulers.mainThread()).subscribe(){
+        MarvelCharacterHandler.getCharacter(id).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 data -> character = data.data.results[0]
             setCharacterView(character)
-        }
+        })
 
+        
         var linearLayoutManager = LinearLayoutManager(this)
         recyclerView = findViewById(R.id.character_series)
         recyclerView.layoutManager = linearLayoutManager
@@ -49,7 +56,7 @@ class CharacterActivity : AppCompatActivity() {
 
     }
 
-    fun setCharacterView(character : Character){
+    private fun setCharacterView(character : Character){
 
         val imgUrl = character.thumbnail.path + "."+ character.thumbnail.extension
 
@@ -61,29 +68,130 @@ class CharacterActivity : AppCompatActivity() {
             .load(imgUrl)
             .into(character_thumbnail)
 
+        setCharacterDescription(character)
+        setLearnMoreBtn(character)
+        setFavoriteBtn(character)
+
+    }
+
+    private fun setCharacterDescription(character : Character){
+
+        if(character.description == ""){
+            character_description.text = "No description Available"
+        }else{
+            character_description.text = character.description
+        }
+    }
+
+    private fun addToFavorites(character: Character){
+
+        Realm.init(this)
+
+        val config = RealmConfiguration.Builder()
+            .schemaVersion(1)
+            .name("favoriteCharacters.realm")
+            .build()
+
+        btnFavorite.setOnClickListener{
+
+            var favoriteCharacter = FavoriteCharacter()
+
+            favoriteCharacter.id = character.id
+            favoriteCharacter.name = character.name
+            favoriteCharacter.imgPath = character.thumbnail.path + "." + character.thumbnail.extension
+
+            println("Adding " + favoriteCharacter.name + " to db")
+
+            realm = Realm.getInstance(config)
+
+            realm.executeTransaction{
+                    realm -> realm.insertOrUpdate(favoriteCharacter) }
+            realm.close()
+
+            setCharacterView(character)
+
+            btnFavorite.text = "Remove from favorites"
+
+        }
+    }
+
+    private fun removeFavorite(character : Character){
+
+        Realm.init(this)
+
+        val config = RealmConfiguration.Builder()
+            .schemaVersion(1)
+            .name("favoriteCharacters.realm")
+            .build()
+
+        btnFavorite.setOnClickListener{
+            realm = Realm.getInstance(config)
+
+            realm.executeTransaction{
+                var result : RealmResults<FavoriteCharacter> =
+                    realm.where(FavoriteCharacter::class.java).equalTo("id", character.id).findAll()
+                result.deleteAllFromRealm()
+            }
+            realm.close()
+
+            println("character was removed")
+
+            setCharacterView(character)
+
+            btnFavorite.text = "Add to favorites"
+        }
+    }
+
+    private fun setFavoriteBtn(character: Character){
+
+        if(checkIfCharacterIsFavorite(character)){
+            btnFavorite.text = "Remove from favorites"
+            removeFavorite(character)
+        }else{
+            addToFavorites(character)
+        }
+    }
+
+
+
+    private fun checkIfCharacterIsFavorite(character: Character) : Boolean{
+        Realm.init(this)
+
+        val config = RealmConfiguration.Builder()
+            .schemaVersion(1)
+            .name("favoriteCharacters.realm")
+            .build()
+        realm = Realm.getInstance(config)
+
+        var favoriteCharacter  : FavoriteCharacter? = realm.where(FavoriteCharacter::class.java)
+            .equalTo("id", character.id)
+            .findFirst()
+        //realm.close()
+
+        return character.id == favoriteCharacter?.id
+    }
+
+    fun setLearnMoreBtn(character: Character){
         val btn_learn_more = findViewById<Button>(R.id.wiki_button)
 
-            for(i in character.urls.indices) {
-                if (character.urls[i].type.equals("wiki")) {
-                    println("Checked wiki")
+        for(i in character.urls.indices) {
+            if (character.urls[i].type.equals("wiki")) {
+                println("Checked wiki")
 
-                    btn_learn_more.setOnClickListener {
+                btn_learn_more.setOnClickListener {
 
-                        println("Url : " + character.urls[i].url)
-                        var openURL = Intent(Intent.ACTION_VIEW)
-                        openURL.data = Uri.parse(character.urls[i].url)
-                        startActivity(openURL)
-                    }
-
-                    btn_learn_more.visibility = View.VISIBLE
-
-                    break
-
-                }else{
-                    btn_learn_more.visibility = View.INVISIBLE
+                    var openURL = Intent(Intent.ACTION_VIEW)
+                    openURL.data = Uri.parse(character.urls[i].url)
+                    startActivity(openURL)
                 }
-            }
 
+                btn_learn_more.visibility = View.VISIBLE
+                break
+
+            }else{
+                btn_learn_more.visibility = View.INVISIBLE
+            }
+        }
     }
 
     private fun initScrollListener(linearLayoutManager: LinearLayoutManager, id : Int){
