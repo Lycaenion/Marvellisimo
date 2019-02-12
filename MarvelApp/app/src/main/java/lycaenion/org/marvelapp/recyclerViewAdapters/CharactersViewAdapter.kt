@@ -6,14 +6,19 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
+import io.realm.Realm
+import io.realm.RealmConfiguration
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.layout_listitem.view.*
 import lycaenion.org.marvelapp.OnItemClickListener
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.activities.CharacterActivity
 import lycaenion.org.marvelapp.models.characterModels.SearchResultCharacter
+import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
 
 class CharactersViewAdapter(var context : Context, var searchResultCharacters : List<SearchResultCharacter> ) : RecyclerView.Adapter<CharactersViewAdapter.ViewHolder>(){
 
@@ -40,6 +45,26 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
         notifyDataSetChanged()
     }
 
+    fun isCharacterFavorite(id : Int) : Boolean{
+
+        var realm : Realm
+
+        Realm.init(context)
+
+        val config = RealmConfiguration.Builder()
+            .schemaVersion(1)
+            .name("favoriteCharacters.realm")
+            .build()
+        realm = Realm.getInstance(config)
+
+        var favoriteCharacter : FavoriteCharacter? = realm.where(FavoriteCharacter::class.java)
+            .equalTo("id", id)
+            .findFirst()
+        realm.close()
+
+        return favoriteCharacter != null
+    }
+
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         Glide.with(context)
             .asBitmap()
@@ -47,6 +72,13 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
             .into(viewHolder.image)
 
         viewHolder.imageName.text = searchResultCharacters[position].name
+
+        if(isCharacterFavorite(searchResultCharacters[position].id)){
+            viewHolder.favoriteIcon.visibility = View.VISIBLE
+            println("True : " + searchResultCharacters[position].name)
+        }else{
+            println("False : " + searchResultCharacters[position].name)
+        }
 
         viewHolder.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int, view: View) {
@@ -62,6 +94,7 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener{
        val imageName : TextView = view.search_character_name
        val image : CircleImageView = view.search_thumbnail
+       val favoriteIcon : ImageView = view.favorite_indicator
 
         private var itemClickListener : OnItemClickListener? = null
 

@@ -165,7 +165,7 @@ class CharacterActivity : AppCompatActivity() {
         var favoriteCharacter  : FavoriteCharacter? = realm.where(FavoriteCharacter::class.java)
             .equalTo("id", character.id)
             .findFirst()
-        realm.close()
+        //realm.close()
 
         return character.id == favoriteCharacter?.id
     }

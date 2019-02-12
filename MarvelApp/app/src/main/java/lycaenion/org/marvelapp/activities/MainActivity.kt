@@ -19,12 +19,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        var realm : Realm
+        //var realm : Realm
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Realm.init(this)
+        /*Realm.init(this)
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         for( i in list.indices){
             println(list[i]?.name + " is in favorite characters db")
-        }
+        }*/
 
         fab.setOnClickListener{view ->
             var intent = Intent(this, SearchCharacter::class.java)

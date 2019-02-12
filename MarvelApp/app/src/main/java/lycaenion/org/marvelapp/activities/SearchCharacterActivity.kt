@@ -49,9 +49,11 @@ class SearchCharacter : AppCompatActivity() {
                 if(searchString.equals("")){
                     resetAdapter()
                     addCharacters(0, searchString)
+                    resetAdapter()
                 }else{
                     resetAdapter()
                     addCharacters(0, searchString)
+                    resetAdapter()
                 }
                 return false
             }
