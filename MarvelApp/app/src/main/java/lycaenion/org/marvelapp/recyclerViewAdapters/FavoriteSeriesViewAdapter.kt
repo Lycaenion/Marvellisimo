@@ -47,7 +47,7 @@ class FavoriteSeriesViewAdapter(var favoritesList : List<FavoriteSeries>) : Recy
 
         val title : TextView = view.search_name
         val img : CircleImageView = view.search_thumbnail
-        val context = view.context
+        val context = view.context!!
 
 
         init {

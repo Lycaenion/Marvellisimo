@@ -34,7 +34,6 @@ class FavoriteCharactersViewAdapter(var context: Context, var favoriteList : Lis
 
         viewHolder.characterName.text = favoriteList[position].name
 
-        viewHolder.favoriteIcon.visibility = View.VISIBLE
 
         viewHolder.setOnclickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int, view: View) {

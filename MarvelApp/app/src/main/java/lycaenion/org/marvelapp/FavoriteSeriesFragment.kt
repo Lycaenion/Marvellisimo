@@ -22,15 +22,6 @@ import lycaenion.org.marvelapp.recyclerViewAdapters.FavoriteSeriesViewAdapter
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [FavoriteSeriesFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [FavoriteSeriesFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class FavoriteSeriesFragment : Fragment() {
 
     private lateinit var seriesList: RealmResults<FavoriteSeries>
@@ -48,8 +39,6 @@ class FavoriteSeriesFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-
 
     }
 
@@ -88,12 +77,14 @@ class FavoriteSeriesFragment : Fragment() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteSeries.realm")
+            .name("favorites.realm")
             .build()
 
         realm = Realm.getInstance(config)
         list = realm.where(FavoriteSeries::class.java).findAll()
-        //realm.close()
+
+        println("size series: " + list)
+
 
         return list
     }
@@ -101,19 +92,9 @@ class FavoriteSeriesFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+        //realm.close()
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)

@@ -34,6 +34,7 @@ class FavoriteCharactersActivity : AppCompatActivity() {
     private fun initAdapter(){
         adapter = FavoriteCharactersViewAdapter(this, characterList)
         recyclerView.adapter = adapter
+        println("come and get me")
     }
 
     private fun fetchCharacters(){
@@ -41,11 +42,13 @@ class FavoriteCharactersActivity : AppCompatActivity() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteSeries.realm")
+            .name("favorites.realm")
             .build()
 
         realm = Realm.getInstance(config)
         characterList = realm.where(FavoriteCharacter::class.java).findAll()
+
+        println("this is the size: " + characterList.size)
         //realm.close()
 
 

@@ -10,9 +10,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.layout_listitem.view.*
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.activities.SeriesActivity
+import lycaenion.org.marvelapp.models.databaseModels.FavoriteSeries
 import lycaenion.org.marvelapp.models.seriesModels.Series
 
 class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Series>) : RecyclerView.Adapter<SeriesViewAdapter.ViewHolder>(){
@@ -40,6 +43,12 @@ class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Se
 
         viewHolder.title.text = searchResultSeries[position].title
 
+        if(checkIfFavorite(searchResultSeries[position].id)){
+            Glide.with(context)
+                .load(R.drawable.ic_favorite_heart)
+                .into(viewHolder.favoriteIcon)
+        }
+
         viewHolder.setOnItemClickListener(object: OnItemClickListener {
             override fun onItemClick(position: Int, view: View) {
                 val intent = Intent(context, SeriesActivity::class.java)
@@ -47,6 +56,28 @@ class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Se
                 context.startActivity(intent)
             }
         })
+    }
+
+    fun checkIfFavorite(id : Int): Boolean{
+
+        var realm : Realm
+        Realm.init(context)
+
+        val config = RealmConfiguration.Builder()
+            .schemaVersion(1)
+            .name("favorites.realm")
+            .build()
+
+        realm = Realm.getInstance(config)
+
+        var favoriteSeries : FavoriteSeries? = realm.where(FavoriteSeries::class.java)
+            .equalTo("id", id)
+            .findFirst()
+
+        realm.close()
+
+        return favoriteSeries != null
+
     }
 
     fun emptyList() {

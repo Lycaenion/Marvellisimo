@@ -41,7 +41,7 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
         notifyDataSetChanged()
     }
 
-    fun isCharacterFavorite(id : Int) : Boolean{
+    private fun checkIfFavorite(id : Int) : Boolean{
 
         var realm : Realm
 
@@ -49,7 +49,7 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteSeries.realm")
+            .name("favorites.realm")
             .build()
         realm = Realm.getInstance(config)
 
@@ -69,11 +69,10 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
 
         viewHolder.imageName.text = searchResultCharacters[position].name
 
-        if(isCharacterFavorite(searchResultCharacters[position].id)){
-            viewHolder.favoriteIcon.visibility = View.VISIBLE
-            println("True : " + searchResultCharacters[position].name)
-        }else{
-            println("False : " + searchResultCharacters[position].name)
+        if(checkIfFavorite(searchResultCharacters[position].id)){
+            Glide.with(context)
+                .load(R.drawable.ic_favorite_heart)
+                .into(viewHolder.favoriteIcon)
         }
 
         viewHolder.setOnItemClickListener(object : OnItemClickListener {

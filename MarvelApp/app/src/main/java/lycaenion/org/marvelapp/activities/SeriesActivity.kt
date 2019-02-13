@@ -44,6 +44,7 @@ class SeriesActivity : AppCompatActivity() {
 
         MarvelSeriesHandler.getSeries(id).observeOn(AndroidSchedulers.mainThread()).subscribe({
             response -> series = response.data.results[0]
+            println(response.code)
             setSeriesView(series)
         })
 
@@ -66,6 +67,8 @@ class SeriesActivity : AppCompatActivity() {
             .asBitmap()
             .load(imgUrl)
             .into(series_thumbnail)
+
+        println("I got here")
         setSeriesDescription(series)
         setLearnMoreBtn(series)
         setFavoriteBtn(series)
@@ -88,7 +91,7 @@ class SeriesActivity : AppCompatActivity() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteSeries.realm")
+            .name("favorites.realm")
             .build()
 
         btnFavorite.setOnClickListener{
@@ -114,7 +117,7 @@ class SeriesActivity : AppCompatActivity() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteSeries.realm")
+            .name("favorites.realm")
             .build()
 
         var realm = Realm.getInstance(config)
@@ -125,8 +128,6 @@ class SeriesActivity : AppCompatActivity() {
             result.deleteAllFromRealm()
         }
         realm.close()
-
-        println("Series was removed")
         setSeriesView(series)
 
         btnFavorite.text = "Add to favorites"
@@ -164,8 +165,6 @@ class SeriesActivity : AppCompatActivity() {
         val btn_learn_more = findViewById<Button>(R.id.wiki_button)
 
         for(i in series.urls.indices) {
-
-            println("Checked wiki")
 
             btn_learn_more.setOnClickListener {
 
@@ -205,6 +204,8 @@ class SeriesActivity : AppCompatActivity() {
             recyclerView.adapter = adapter
         })
     }
+
+
 
 
 }

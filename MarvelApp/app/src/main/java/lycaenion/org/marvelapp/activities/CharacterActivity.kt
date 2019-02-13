@@ -89,7 +89,7 @@ class CharacterActivity : AppCompatActivity() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteSeries.realm")
+            .name("favorites.realm")
             .build()
 
         btnFavorite.setOnClickListener{
@@ -121,7 +121,7 @@ class CharacterActivity : AppCompatActivity() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteCharacters.realm")
+            .name("favorites.realm")
             .build()
 
         btnFavorite.setOnClickListener{
@@ -159,7 +159,7 @@ class CharacterActivity : AppCompatActivity() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteSeries.realm")
+            .name("favorites.realm")
             .build()
         realm = Realm.getInstance(config)
 
@@ -175,7 +175,7 @@ class CharacterActivity : AppCompatActivity() {
         val btn_learn_more = findViewById<Button>(R.id.wiki_button)
 
         for(i in character.urls.indices) {
-            if (character.urls[i].type.equals("wiki")) {
+            if (character.urls[i].type == "wiki") {
                 println("Checked wiki")
 
                 btn_learn_more.setOnClickListener {
