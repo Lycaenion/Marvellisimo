@@ -5,5 +5,6 @@ class Series(val id : Int,
              val description : String,
              val startYear : Int,
              val endYear : Int,
-             val thumbnail: Thumbnail) {
+             val thumbnail: Thumbnail,
+             val urls : Array<Url>) {
 }

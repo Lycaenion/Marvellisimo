@@ -47,7 +47,9 @@ class SearchSeriesActivity : AppCompatActivity() {
                     resetAdapter()
                     addSeries(0,searchString)
                 }else{
+                    resetAdapter()
                     addSeries(0, searchString)
+                    resetAdapter()
                 }
                 return false
             }
@@ -62,9 +64,12 @@ class SearchSeriesActivity : AppCompatActivity() {
                 if(searchString.equals("")){
                     resetAdapter()
                     addSeries(0, searchString)
+                    resetAdapter()
                 }else{
                     resetAdapter()
+                    println("size: " + seriesList.size)
                     addSeries(0, searchString)
+                    resetAdapter()
                 }
 
                 return false
@@ -80,7 +85,7 @@ class SearchSeriesActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    fun initAdapter(){
+    private fun initAdapter(){
         MarvelSeriesHandler.getAllSeries(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
             response -> seriesList = seriesList + response.data.results.asList()
             adapter = SeriesViewAdapter(this, seriesList)
@@ -88,7 +93,7 @@ class SearchSeriesActivity : AppCompatActivity() {
         })
     }
 
-    fun initScrollListener(linearLayoutManager: LinearLayoutManager){
+    private fun initScrollListener(linearLayoutManager: LinearLayoutManager){
         scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager){
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
                 addSeries(page*20, searchString)
@@ -101,7 +106,6 @@ class SearchSeriesActivity : AppCompatActivity() {
         if(search.equals("")){
             if(offset == 0){
                 scrollListener.resetState()
-                seriesList = emptyList()
                 adapter.notifyDataSetChanged()
                 MarvelSeriesHandler.getAllSeries(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
                     response -> seriesList = seriesList + response.data.results.asList()

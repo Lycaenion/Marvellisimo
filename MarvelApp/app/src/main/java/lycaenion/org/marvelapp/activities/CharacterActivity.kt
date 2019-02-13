@@ -83,7 +83,7 @@ class CharacterActivity : AppCompatActivity() {
         }
     }
 
-    private fun addToFavorites(character: Character){
+    private fun addFavorite(character: Character){
 
         Realm.init(this)
 
@@ -148,7 +148,7 @@ class CharacterActivity : AppCompatActivity() {
             btnFavorite.text = "Remove from favorites"
             removeFavorite(character)
         }else{
-            addToFavorites(character)
+            addFavorite(character)
         }
     }
 

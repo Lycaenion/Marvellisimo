@@ -28,13 +28,13 @@ class CharacterSeriesViewAdapter(var context : Context, var characterSeriesList 
     override fun onBindViewHolder(viewHolder : ViewHolder, position: Int) {
         viewHolder.title.text = characterSeriesList[position].title
 
-        viewHolder.setOnItemClickListner(object : OnItemClickListener{
+        viewHolder.setOnItemClickListener(object : OnItemClickListener{
             override fun onItemClick(position: Int, view: View) {
 
                 println(characterSeriesList[position].title)
-                /*val intent = Intent(context, SeriesActivity::class.java)
+                val intent = Intent(context, SeriesActivity::class.java)
                 intent.putExtra("id", characterSeriesList[position].id)
-                context.startActivity(intent)*/
+                context.startActivity(intent)
             }
         })
     }
@@ -54,7 +54,7 @@ class CharacterSeriesViewAdapter(var context : Context, var characterSeriesList 
             itemView.setOnClickListener(this)
         }
 
-        fun setOnItemClickListner(itemClickListener: OnItemClickListener){
+        fun setOnItemClickListener(itemClickListener: OnItemClickListener){
             this.itemClickListener = itemClickListener
         }
 
