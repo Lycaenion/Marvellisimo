@@ -1,9 +1,9 @@
 package lycaenion.org.marvelapp.services
 
 import io.reactivex.Single
-import lycaenion.org.marvelapp.models.APIResponseSearchSeries
-import lycaenion.org.marvelapp.models.APIResponseSeries
-import lycaenion.org.marvelapp.models.APIResponseSeriesCharacters
+import lycaenion.org.marvelapp.models.seriesModels.APIResponseSearchSeries
+import lycaenion.org.marvelapp.models.seriesModels.APIResponseSeries
+import lycaenion.org.marvelapp.models.seriesModels.APIResponseSeriesCharacters
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

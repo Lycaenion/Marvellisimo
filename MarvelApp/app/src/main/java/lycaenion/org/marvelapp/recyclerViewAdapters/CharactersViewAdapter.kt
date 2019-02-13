@@ -13,7 +13,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.layout_listitem.view.*
-import lycaenion.org.marvelapp.OnItemClickListener
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.activities.CharacterActivity
 import lycaenion.org.marvelapp.models.characterModels.SearchResultCharacter
@@ -77,7 +76,7 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
             println("False : " + searchResultCharacters[position].name)
         }
 
-        viewHolder.setOnItemClickListener(object : OnItemClickListener{
+        viewHolder.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int, view: View) {
                 val intent = Intent(context, CharacterActivity::class.java)
                 intent.putExtra("id", searchResultCharacters[position].id)

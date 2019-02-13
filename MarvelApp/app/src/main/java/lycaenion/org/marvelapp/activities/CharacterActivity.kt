@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_character.*
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
 import lycaenion.org.marvelapp.models.characterModels.Character
-import lycaenion.org.marvelapp.models.Series
+import lycaenion.org.marvelapp.models.seriesModels.Series
 import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
 import lycaenion.org.marvelapp.recyclerViewAdapters.CharacterSeriesViewAdapter
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener

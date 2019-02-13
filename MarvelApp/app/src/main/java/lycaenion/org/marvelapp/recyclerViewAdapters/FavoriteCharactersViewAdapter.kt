@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.layout_listitem.view.*
-import lycaenion.org.marvelapp.OnItemClickListener
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.activities.CharacterActivity
 import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
@@ -37,7 +36,7 @@ class FavoriteCharactersViewAdapter(var context: Context, var favoriteList : Lis
 
         viewHolder.favoriteIcon.visibility = View.VISIBLE
 
-        viewHolder.setOnclickListener(object : OnItemClickListener{
+        viewHolder.setOnclickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int, view: View) {
                 val intent = Intent(context, CharacterActivity::class.java)
                 intent.putExtra("id", favoriteList[position].id)

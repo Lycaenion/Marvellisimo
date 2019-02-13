@@ -1,4 +1,7 @@
-package lycaenion.org.marvelapp.models
+package lycaenion.org.marvelapp.models.seriesModels
+
+import lycaenion.org.marvelapp.models.Thumbnail
+import lycaenion.org.marvelapp.models.Url
 
 class Series(val id : Int,
              val title : String,

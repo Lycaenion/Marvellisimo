@@ -7,11 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.layout_mini_listitem.view.*
-import lycaenion.org.marvelapp.OnItemClickListener
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.activities.CharacterActivity
 import lycaenion.org.marvelapp.models.characterModels.SearchResultCharacter
-import java.text.FieldPosition
 
 class SeriesCharactersViewAdapter(var context : Context, var seriesCharacterList : List<SearchResultCharacter>) : RecyclerView.Adapter<SeriesCharactersViewAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesCharactersViewAdapter.ViewHolder {
@@ -28,7 +26,7 @@ class SeriesCharactersViewAdapter(var context : Context, var seriesCharacterList
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.name.text = seriesCharacterList[position].name
 
-        viewHolder.setOnClickListener(object : OnItemClickListener{
+        viewHolder.setOnClickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int, view: View) {
                 val intent = Intent(context, CharacterActivity::class.java)
                 intent.putExtra("id", seriesCharacterList[position].id)

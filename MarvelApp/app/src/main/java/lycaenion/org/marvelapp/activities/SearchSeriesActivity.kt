@@ -8,7 +8,7 @@ import android.widget.SearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelSeriesHandler
-import lycaenion.org.marvelapp.models.Series
+import lycaenion.org.marvelapp.models.seriesModels.Series
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener
 import lycaenion.org.marvelapp.recyclerViewAdapters.SeriesViewAdapter
 

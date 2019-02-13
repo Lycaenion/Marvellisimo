@@ -1,12 +1,12 @@
-package lycaenion.org.marvelapp.models
+package lycaenion.org.marvelapp.models.seriesModels
 
 import com.google.gson.annotations.SerializedName
-import lycaenion.org.marvelapp.SeriesData
 
 class APIResponseSeries(@SerializedName("code")
                         val code : Int,
                         @SerializedName("status")
                         val status : String,
                         @SerializedName("data")
-                        val data : SeriesData) {
+                        val data : SeriesData
+) {
 }

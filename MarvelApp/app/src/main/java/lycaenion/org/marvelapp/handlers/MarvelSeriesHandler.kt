@@ -2,9 +2,8 @@ package lycaenion.org.marvelapp.handlers
 
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import lycaenion.org.marvelapp.SeriesData
-import lycaenion.org.marvelapp.models.*
-import lycaenion.org.marvelapp.services.CharacterService
+import lycaenion.org.marvelapp.models.seriesModels.SeriesData
+import lycaenion.org.marvelapp.models.seriesModels.*
 import lycaenion.org.marvelapp.services.SeriesService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -58,14 +57,22 @@ object MarvelSeriesHandler {
     fun getAllSeries(offset : Int) : Single<APIResponseSearchSeries>{
         return service.getAllSeries(offset).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
             println("error : ${it.message}")
-            APIResponseSearchSeries(1, "", SeriesSearchData(emptyArray()))
+            APIResponseSearchSeries(
+                1,
+                "",
+                SeriesSearchData(emptyArray())
+            )
         }
     }
 
     fun searchSeries(title : String) : Single<APIResponseSearchSeries>{
         return service.searchSeries(title).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
             println("error : ${it.message}")
-            APIResponseSearchSeries(1, "", SeriesSearchData(emptyArray()))
+            APIResponseSearchSeries(
+                1,
+                "",
+                SeriesSearchData(emptyArray())
+            )
         }
     }
 
@@ -79,7 +86,11 @@ object MarvelSeriesHandler {
     fun getCharactersInSeries( offset : Int, id : Int) : Single<APIResponseSeriesCharacters>{
         return service.getSeriesCharacters(id, offset).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
             println("error ${it.message}")
-            APIResponseSeriesCharacters(1, "", SeriesCharacterData(emptyArray()))
+            APIResponseSeriesCharacters(
+                1,
+                "",
+                SeriesCharacterData(emptyArray())
+            )
         }
     }
 }

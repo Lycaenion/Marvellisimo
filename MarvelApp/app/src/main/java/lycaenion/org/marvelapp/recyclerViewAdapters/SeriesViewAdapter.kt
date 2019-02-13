@@ -11,10 +11,9 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.layout_listitem.view.*
-import lycaenion.org.marvelapp.OnItemClickListener
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.activities.SeriesActivity
-import lycaenion.org.marvelapp.models.Series
+import lycaenion.org.marvelapp.models.seriesModels.Series
 
 class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Series>) : RecyclerView.Adapter<SeriesViewAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewAdapter.ViewHolder {
@@ -41,7 +40,7 @@ class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Se
 
         viewHolder.title.text = searchResultSeries[position].title
 
-        viewHolder.setOnItemClickListener(object: OnItemClickListener{
+        viewHolder.setOnItemClickListener(object: OnItemClickListener {
             override fun onItemClick(position: Int, view: View) {
                 val intent = Intent(context, SeriesActivity::class.java)
                 intent.putExtra("id", searchResultSeries[position].id)
