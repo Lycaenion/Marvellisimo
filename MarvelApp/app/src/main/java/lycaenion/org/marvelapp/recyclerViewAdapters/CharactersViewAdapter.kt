@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.layout_listitem.view.*
 import lycaenion.org.marvelapp.OnItemClickListener
 import lycaenion.org.marvelapp.R
@@ -89,7 +88,7 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
     }
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener{
-       val imageName : TextView = view.search_character_name
+       val imageName : TextView = view.search_name
        val image : CircleImageView = view.search_thumbnail
        val favoriteIcon : ImageView = view.favorite_indicator
 

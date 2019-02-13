@@ -12,6 +12,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".activities.SearchSeriesActivity">
+        </activity>
         <activity android:name=".activities.FavoriteCharactersActivity">
         </activity>
         <activity android:name=".activities.SeriesActivity">

@@ -26,7 +26,6 @@ class SearchCharacter : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_character)
 
-
         var linearLayoutManager = LinearLayoutManager(this)
         recyclerView = findViewById(R.id.character_recycler_view)
         recyclerView.layoutManager = linearLayoutManager
@@ -47,9 +46,11 @@ class SearchCharacter : AppCompatActivity() {
                 }
                 
                 if(searchString.equals("")){
-                    addCharacters(0, searchString)
                     resetAdapter()
+                    addCharacters(0, searchString)
+
                 }else{
+                    resetAdapter()
                     addCharacters(0, searchString)
                     resetAdapter()
                 }
@@ -78,18 +79,16 @@ class SearchCharacter : AppCompatActivity() {
     private fun resetAdapter(){
         scrollListener.resetState()
         characterList = emptyList()
+        adapter.addCharacters(characterList)
         adapter.notifyDataSetChanged()
     }
 
     private fun initAdapter(){
-
         MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
             response -> characterList = characterList + response.data.results.asList()
             adapter = CharactersViewAdapter(this, characterList)
             recyclerView.adapter = adapter
         })
-
-
     }
 
     private fun initScrollListener(linearLayoutManager: LinearLayoutManager){

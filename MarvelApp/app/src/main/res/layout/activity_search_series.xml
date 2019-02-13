@@ -6,10 +6,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".activities.SearchCharacter">
-
+        tools:context=".activities.SearchSeriesActivity">
     <SearchView
-            android:id="@+id/search_character"
+            android:id="@+id/search_series"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,11 +24,10 @@
                     android:id="@+id/relativeLayout">
         <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:id="@+id/character_recycler_view"
-                                                android:layout_marginTop="0dp"
+                                                android:id="@+id/series_recycler_view"
+                                                android:layout_marginTop="70dp"
                                                 android:layout_alignParentTop="true">
         </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
-
 
 </android.support.design.widget.CoordinatorLayout>
