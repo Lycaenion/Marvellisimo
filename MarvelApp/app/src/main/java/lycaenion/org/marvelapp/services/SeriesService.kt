@@ -20,5 +20,5 @@ interface SeriesService {
     fun getSeriesCharacters(@Path("seriesId") seriesId: Int, @Query("offset") offset: Int) : Single<APIResponseSeriesCharacters>
 
     @GET("series")
-    fun searchSeries(@Query("titleStartsWith") seriesName : String) : Single<APIResponseSearchSeries>
+    fun searchSeries(@Query("titleStartsWith") seriesName : String, @Query("offset") offset : Int) : Single<APIResponseSearchSeries>
 }

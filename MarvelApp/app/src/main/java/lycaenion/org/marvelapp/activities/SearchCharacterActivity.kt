@@ -12,7 +12,7 @@ import lycaenion.org.marvelapp.models.characterModels.SearchResultCharacter
 import lycaenion.org.marvelapp.recyclerViewAdapters.CharactersViewAdapter
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener
 
-class SearchCharacter : AppCompatActivity() {
+class SearchCharacterActivity : AppCompatActivity() {
 
     private var characterList : List<SearchResultCharacter> = emptyList()
     private lateinit var scrollListener : EndlessRecyclerViewScrollListener

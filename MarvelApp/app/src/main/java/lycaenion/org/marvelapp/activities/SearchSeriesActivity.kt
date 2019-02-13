@@ -1,5 +1,6 @@
 package lycaenion.org.marvelapp.activities
 
+import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -80,11 +81,12 @@ class SearchSeriesActivity : AppCompatActivity() {
 
     private fun resetAdapter(){
         scrollListener.resetState()
+        adapter.emptyList()
         seriesList = emptyList()
         adapter.addSeries(seriesList)
-        adapter.notifyDataSetChanged()
     }
 
+    @SuppressLint("CheckResult")
     private fun initAdapter(){
         MarvelSeriesHandler.getAllSeries(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
             response -> seriesList = seriesList + response.data.results.asList()
@@ -102,6 +104,7 @@ class SearchSeriesActivity : AppCompatActivity() {
         recyclerView.addOnScrollListener(scrollListener)
     }
 
+    @SuppressLint("CheckResult")
     fun addSeries(offset : Int, search: String){
         if(search.equals("")){
             if(offset == 0){
@@ -120,7 +123,7 @@ class SearchSeriesActivity : AppCompatActivity() {
                 })
             }
         }else{
-            MarvelSeriesHandler.searchSeries(searchString).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            MarvelSeriesHandler.searchSeries(searchString, offset).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 response -> seriesList = seriesList + response.data.results.asList()
                 adapter.addSeries(seriesList)
                 adapter.notifyDataSetChanged()

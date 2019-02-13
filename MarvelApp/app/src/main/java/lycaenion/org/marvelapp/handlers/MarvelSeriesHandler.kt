@@ -65,8 +65,8 @@ object MarvelSeriesHandler {
         }
     }
 
-    fun searchSeries(title : String) : Single<APIResponseSearchSeries>{
-        return service.searchSeries(title).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
+    fun searchSeries(title : String, offset: Int) : Single<APIResponseSearchSeries>{
+        return service.searchSeries(title, offset).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
             println("error : ${it.message}")
             APIResponseSearchSeries(
                 1,

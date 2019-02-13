@@ -41,11 +41,11 @@ class FavoriteCharactersActivity : AppCompatActivity() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteCharacters.realm")
+            .name("favoriteSeries.realm")
             .build()
 
         realm = Realm.getInstance(config)
-        characterList =   realm.where(FavoriteCharacter::class.java).findAll()
+        characterList = realm.where(FavoriteCharacter::class.java).findAll()
         //realm.close()
 
 

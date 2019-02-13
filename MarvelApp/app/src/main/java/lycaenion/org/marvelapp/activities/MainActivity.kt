@@ -1,19 +1,81 @@
 package lycaenion.org.marvelapp.activities
 
+
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.NavigationView
+import android.support.v4.app.FragmentTransaction
+import android.support.v4.view.GravityCompat
+import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.RealmResults
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
+import lycaenion.org.marvelapp.FavoriteSeriesFragment
 
 import lycaenion.org.marvelapp.R
-import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInteractionListener,
+    NavigationView.OnNavigationItemSelectedListener {
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.nav_home ->{
+                Toast.makeText(this, "You are home", Toast.LENGTH_SHORT)
+            }
+
+            R.id.nav_all_characters ->{
+                var intent = Intent(this, SearchCharacterActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_all_series ->{
+                var intent = Intent(this, SearchSeriesActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_search_character ->{
+                var intent = Intent(this, SearchCharacterActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_search_series->{
+                var intent = Intent(this, SearchSeriesActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_show_favorite_characters ->{
+                var intent = Intent(this, FavoriteCharactersActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_show_favorite_series ->{
+                println(favoriteSeriesFragment.toString())
+                Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT)
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, favoriteSeriesFragment)
+                    .addToBackStack(favoriteSeriesFragment.toString())
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+            }
+        }
+
+        drawer_layout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    override fun onFragmentInteraction(uri: Uri) {
+        println("hello")
+    }
+
+    lateinit var favoriteSeriesFragment : FavoriteSeriesFragment
+
+    override fun onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
 
 
 
@@ -23,6 +85,19 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
+
+
+
+        val toggle = ActionBarDrawerToggle(
+            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        nav_view.setNavigationItemSelectedListener(this)
+
+        favoriteSeriesFragment = FavoriteSeriesFragment.newInstance()
+
 
         /*Realm.init(this)
 
@@ -41,11 +116,14 @@ class MainActivity : AppCompatActivity() {
             println(list[i]?.name + " is in favorite characters db")
         }*/
 
-        fab.setOnClickListener{view ->
-            var intent = Intent(this, SearchSeriesActivity::class.java)
+/*        fab.setOnClickListener{view ->
+
+
+*//*
+            var intent = Intent(this, SearchCharacterActivity::class.java)
             //intent.putExtra("id",1009546)
-            startActivity(intent)
-        }
+            startActivity(intent)*//*
+        }*/
 
 
 

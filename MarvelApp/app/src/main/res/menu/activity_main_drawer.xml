@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_home"
+                android:title="Home"/>
+
+        <item
+                android:id="@+id/nav_all_characters"
+                android:icon="@drawable/ic_character"
+                android:title="All Characters"/>
+        <item
+                android:id="@+id/nav_search_character"
+                android:icon="@drawable/ic_search"
+                android:title="Search Character"/>
+        <item
+                android:id="@+id/nav_show_favorite_characters"
+                android:icon="@drawable/ic_favorite"
+                android:title="Favorite Characters"/>
+
+        <item
+                android:id="@+id/nav_all_series"
+                android:icon="@drawable/ic_character"
+                android:title="All Series"/>
+
+        <item
+                android:id="@+id/nav_search_series"
+                android:icon="@drawable/ic_search"
+                android:title="Search Series"/>
+
+        <item
+                android:id="@+id/nav_show_favorite_series"
+                android:icon="@drawable/ic_favorite"
+                android:title="Favorite Series"/>
+    </group>
+
+
+</menu>
+
+

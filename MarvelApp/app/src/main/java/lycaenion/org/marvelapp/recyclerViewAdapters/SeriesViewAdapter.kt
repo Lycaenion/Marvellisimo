@@ -49,6 +49,10 @@ class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Se
         })
     }
 
+    fun emptyList() {
+        searchResultSeries = kotlin.collections.emptyList()
+    }
+
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener{
         val title : TextView = view.search_name
         val img : CircleImageView = view.search_thumbnail

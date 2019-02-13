@@ -7,20 +7,25 @@
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
+            android:label="Marvellisimo"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".activities.SearchSeriesActivity">
+        <activity android:name=".activities.SearchSeriesActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activities.FavoriteCharactersActivity">
+        <activity android:name=".activities.FavoriteCharactersActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activities.SeriesActivity">
+        <activity android:name=".activities.SeriesActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activities.CharacterActivity">
+        <activity android:name=".activities.CharacterActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activities.SearchCharacter">
+        <activity android:name=".activities.SearchCharacterActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
                 android:name=".activities.MainActivity"

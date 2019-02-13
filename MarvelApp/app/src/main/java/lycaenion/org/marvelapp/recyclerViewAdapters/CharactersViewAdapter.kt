@@ -49,7 +49,7 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteCharacters.realm")
+            .name("favoriteSeries.realm")
             .build()
         realm = Realm.getInstance(config)
 

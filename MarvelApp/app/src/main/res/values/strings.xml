@@ -1,18 +1,25 @@
 <resources>
-    <string name="app_name">MarvelApp</string>
     <string name="action_settings">Settings</string>
     <string name="searchCharacterName">Character</string>
-    <string name="button_for_adding_to_favouritelist">Button for adding to favouriteList</string>
+    <string name="button_for_adding_to_favoritelist">Button for adding to favoriteList</string>
     <string name="character_description">Description</string>
     <string name="add_to_favorites">Add to favorites</string>
     <string name="series_where_the_character_appears">Series where the character appears</string>
     <string name="learn_more">Learn More</string>
     <string name="name">Name</string>
     <string name="thumbnail">thumbnail</string>
-    <string name="indicator_that_the_character_is_a_string_add_to_favorites">indicator that the character is a
-        @string/add_to_favorites
-    </string>
+    <string name="indicator_that_the_character_is_a_string_add_to_favorites">indicator that the character is a favorite</string>
     <string name="characters_that_appears">Characters that appear in this series</string>
     <string name="series_description">description</string>
     <string name="title">title</string>
+    <string name="app_name">Marvellisimo</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_favoriteSeries_fragment">Hello from favoriteSeries fragment</string>
 </resources>

@@ -89,7 +89,7 @@ class CharacterActivity : AppCompatActivity() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteCharacters.realm")
+            .name("favoriteSeries.realm")
             .build()
 
         btnFavorite.setOnClickListener{
@@ -159,7 +159,7 @@ class CharacterActivity : AppCompatActivity() {
 
         val config = RealmConfiguration.Builder()
             .schemaVersion(1)
-            .name("favoriteCharacters.realm")
+            .name("favoriteSeries.realm")
             .build()
         realm = Realm.getInstance(config)
 
