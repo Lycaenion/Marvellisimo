@@ -8,7 +8,9 @@
     <string name="learn_more">Learn More</string>
     <string name="name">Name</string>
     <string name="thumbnail">thumbnail</string>
-    <string name="indicator_that_the_character_is_a_string_add_to_favorites">indicator that the character is a favorite</string>
+    <string name="indicator_that_the_character_is_a_string_add_to_favorites">indicator that the character is a
+        favorite
+    </string>
     <string name="characters_that_appears">Characters that appear in this series</string>
     <string name="series_description">description</string>
     <string name="title">title</string>

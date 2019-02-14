@@ -19,20 +19,12 @@ import lycaenion.org.marvelapp.FavoriteSeriesFragment
 
 import lycaenion.org.marvelapp.R
 
-class MainActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInteractionListener{
-    lateinit var favoriteFragment : FavoriteSeriesFragment
-
-    override fun onFragmentInteraction(uri: Uri) {
-        println("hello")
-    }
-
-
-
+class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         //var realm : Realm
-        favoriteFragment = FavoriteSeriesFragment.newInstance()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -64,12 +56,9 @@ class MainActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInter
         }
 
         fabFavoriteSeries.setOnClickListener {
-            view -> supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container,favoriteFragment)
-            .addToBackStack(favoriteFragment.toString())
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .commit()
+            fabFavoriteSeries.setOnClickListener {
+                    view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
+            }
         }
 
 

@@ -24,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
 
 class FavoriteSeriesFragment : Fragment() {
 
-    private lateinit var seriesList: RealmResults<FavoriteSeries>
+  /*  private lateinit var seriesList: RealmResults<FavoriteSeries>
     private lateinit var adapter: FavoriteSeriesViewAdapter
     private lateinit var recyclerView : RecyclerView
     private lateinit var realm : Realm
@@ -69,25 +69,7 @@ class FavoriteSeriesFragment : Fragment() {
         }
     }
 
-    private fun fetchSeries() : List<FavoriteSeries>{
-        var list  : RealmResults<FavoriteSeries>
-        var realm : Realm
 
-        Realm.init(activity)
-
-        val config = RealmConfiguration.Builder()
-            .schemaVersion(1)
-            .name("favorites.realm")
-            .build()
-
-        realm = Realm.getInstance(config)
-        list = realm.where(FavoriteSeries::class.java).findAll()
-
-        println("size series: " + list)
-
-
-        return list
-    }
 
     override fun onDetach() {
         super.onDetach()
@@ -106,11 +88,11 @@ class FavoriteSeriesFragment : Fragment() {
             val arguments = Bundle()
             return fragment
         }
-            /*FavoriteSeriesFragment().apply {
+            *//*FavoriteSeriesFragment().apply {
                 arguments = Bundle().apply {
 //                    putString(ARG_PARAM1, param1)
 //                    putString(ARG_PARAM2, param2)
                 }
-            }*/
-    }
+            }*//*
+    }*/
 }

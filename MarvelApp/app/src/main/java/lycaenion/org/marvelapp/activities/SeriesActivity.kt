@@ -34,10 +34,8 @@ import lycaenion.org.marvelapp.models.databaseModels.FavoriteSeries
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener
 import lycaenion.org.marvelapp.recyclerViewAdapters.SeriesCharactersViewAdapter
 
-class SeriesActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInteractionListener {
-    override fun onFragmentInteraction(uri: Uri) {
-        println("Hello")
-    }
+class SeriesActivity : AppCompatActivity() {
+
 
 
     private var seriesCharactersList : List<SearchResultCharacter> = emptyList()
@@ -57,8 +55,6 @@ class SeriesActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInt
         var fabAllSeries = findViewById<FloatingActionButton>(R.id.nav_all_series)
         var fabFavoriteCharacters = findViewById<FloatingActionButton>(R.id.nav_show_favorite_characters)
         var fabFavoriteSeries = findViewById<FloatingActionButton>(R.id.nav_show_favorite_series)
-
-        favoriteFragment = FavoriteSeriesFragment.newInstance()
 
         fabSearchCharacter.setOnClickListener {
                 view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
@@ -81,16 +77,12 @@ class SeriesActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInt
         }
 
         fabFavoriteSeries.setOnClickListener {
-                view -> supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container,favoriteFragment)
-            .addToBackStack(favoriteFragment.toString())
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .commit()
+            fabFavoriteSeries.setOnClickListener {
+                    view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
+            }
         }
 
         btnFavorite = findViewById(R.id.add_favorite_btn)
-        favoriteFragment = FavoriteSeriesFragment.newInstance()
 
         /*val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
