@@ -3,14 +3,12 @@ package lycaenion.org.marvelapp.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.github.clans.fab.FloatingActionButton
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
-import lycaenion.org.marvelapp.FavoriteSeriesFragment
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
 import lycaenion.org.marvelapp.recyclerViewAdapters.FavoriteCharactersViewAdapter
@@ -38,7 +36,7 @@ class FavoriteCharactersActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.favorite_characters_view)
         recyclerView.layoutManager = linearLayoutManager
         fetchCharacters()
-        initAdapter()
+        //initAdapter()
     }
 
     private fun initMenu(){
@@ -74,9 +72,10 @@ class FavoriteCharactersActivity : AppCompatActivity() {
         }
     }
 
-    private fun initAdapter(){
+    private fun initAdapter(characterList : List<FavoriteCharacter>){
         adapter = FavoriteCharactersViewAdapter(this, characterList)
         recyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
     private fun fetchCharacters(){
@@ -91,6 +90,15 @@ class FavoriteCharactersActivity : AppCompatActivity() {
         var realm = Realm.getInstance(config)
         characterList = realm.where(FavoriteCharacter::class.java).findAll()
 
-        realm.close()
+        initAdapter(characterList)
+
+        adapter.notifyDataSetChanged()
+
+        //realm.close()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchCharacters()
     }
 }

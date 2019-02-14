@@ -86,10 +86,6 @@ class FavoriteSeriesActivity : AppCompatActivity() {
         var realm = Realm.getInstance(config)
         seriesList = realm.where(FavoriteSeries::class.java).findAll()
 
-        for (i in seriesList.indices){
-            println(seriesList[i]!!.title)
-        }
-
         initAdapter(seriesList)
 
         adapter.notifyDataSetChanged()
@@ -98,8 +94,8 @@ class FavoriteSeriesActivity : AppCompatActivity() {
     }
 
     override fun onResume(){
+
         super.onResume()
-        println("I have resumed")
         fetchSeries()
     }
 

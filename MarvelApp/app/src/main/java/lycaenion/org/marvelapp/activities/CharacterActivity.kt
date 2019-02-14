@@ -121,10 +121,7 @@ class CharacterActivity : AppCompatActivity() {
 
     private fun setFavoriteBtn(character: Character){
 
-        println("set button for character")
-
         if(checkIfCharacterIsFavorite(character)){
-            btnFavorite.text = "Remove from favorites"
             removeFavorite(character)
         }else{
             addFavorite(character)
@@ -141,6 +138,7 @@ class CharacterActivity : AppCompatActivity() {
     }
 
     private fun addFavorite(character: Character){
+        btnFavorite.text = "Add to favorites"
 
         Realm.init(this)
 
@@ -158,19 +156,18 @@ class CharacterActivity : AppCompatActivity() {
             favoriteCharacter.imgPath = character.thumbnail.path + "." + character.thumbnail.extension
 
             var realm = Realm.getInstance(config)
-
             realm.executeTransaction{
                     realm -> realm.insertOrUpdate(favoriteCharacter) }
             realm.close()
 
-            setCharacterView(character)
-
-            btnFavorite.text = "Remove from favorites"
+            setFavoriteBtn(character)
 
         }
     }
 
     private fun removeFavorite(character : Character){
+
+        btnFavorite.text = "Remove from favorites"
 
         Realm.init(this)
 
@@ -180,16 +177,16 @@ class CharacterActivity : AppCompatActivity() {
             .build()
 
         btnFavorite.setOnClickListener{
+
             var realm = Realm.getInstance(config)
 
             realm.executeTransaction{
-               it.where(FavoriteCharacter::class.java).equalTo("id", character.id).findAll().deleteAllFromRealm()
+               it.where(FavoriteCharacter::class.java)
+                   .equalTo("id", character.id)
+                   .findAll().deleteAllFromRealm()
             }
             realm.close()
-
-            setCharacterView(character)
-
-            btnFavorite.text = "Add to favorites"
+            setFavoriteBtn(character)
         }
     }
 
@@ -202,14 +199,12 @@ class CharacterActivity : AppCompatActivity() {
             .build()
         var realm = Realm.getInstance(config)
 
-        var favoriteCharacter  : FavoriteCharacter? = realm.where(FavoriteCharacter::class.java)
+        val favorite   = realm.where(FavoriteCharacter::class.java)
             .equalTo("id", character.id)
             .findFirst()
-        realm.close()
+        //realm.close()
 
-        println("character is in database : " + (character.id == favoriteCharacter?.id))
-
-        return character.id == favoriteCharacter?.id
+        return favorite != null
     }
 
     private fun setLearnMoreBtn(character: Character){
@@ -249,6 +244,7 @@ class CharacterActivity : AppCompatActivity() {
         if(offset == 0){
             scrollListener.resetState()
             characterSeriesList = emptyList()
+            adapter.addSeries(characterSeriesList)
         }else{
             MarvelCharacterHandler.getSeriesWithCharacter(id, offset).observeOn(AndroidSchedulers.mainThread()).subscribe {
                 response -> characterSeriesList = characterSeriesList + response.data.results.asList()

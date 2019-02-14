@@ -69,7 +69,6 @@ class SeriesActivity : AppCompatActivity() {
         MarvelSeriesHandler.getSeries(id).observeOn(AndroidSchedulers.mainThread()).subscribe {
             response -> series = response.data.results[0]
             setSeriesView(series)
-            println("getting info for " + series.title)
         }
 
         linearLayoutManager = LinearLayoutManager(this)
@@ -124,12 +123,10 @@ class SeriesActivity : AppCompatActivity() {
             .load(imgUrl)
             .into(series_thumbnail)
 
-        println("setting upp")
-
         setSeriesDescription(series)
         setLearnMoreBtn(series)
         setFavoriteBtn(series)
-        println("setting up has been done")
+
     }
 
     private fun setFavoriteBtn(series: Series){
@@ -153,7 +150,7 @@ class SeriesActivity : AppCompatActivity() {
 
     private fun addFavorites(series: Series){
         btnFavorite.text = "Add to favorites"
-        println("Now it is possible to add character")
+
         Realm.init(this)
 
         val config = RealmConfiguration.Builder()
@@ -194,7 +191,8 @@ class SeriesActivity : AppCompatActivity() {
 
             var realm = Realm.getInstance(config)
             realm.executeTransaction {
-                it.where(FavoriteSeries::class.java).equalTo("id", series.id)
+                it.where(FavoriteSeries::class.java)
+                    .equalTo("id", series.id)
                     .findAll()
                     .deleteAllFromRealm()
             }
@@ -260,7 +258,8 @@ class SeriesActivity : AppCompatActivity() {
             seriesCharactersList  = emptyList()
             adapter.addCharacters(seriesCharactersList)
         }else{
-            MarvelSeriesHandler.getCharactersInSeries(offset, id).observeOn(Schedulers.io()).subscribe { response -> seriesCharactersList = seriesCharactersList + response.data.results.toList()
+            MarvelSeriesHandler.getCharactersInSeries(offset, id).observeOn(Schedulers.io()).subscribe {
+                response -> seriesCharactersList = seriesCharactersList + response.data.results.toList()
                 adapter.addCharacters(seriesCharactersList)
                 adapter.notifyDataSetChanged()
             }
