@@ -4,16 +4,19 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import com.bumptech.glide.Glide
+import com.github.clans.fab.FloatingActionButton
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_character.*
+import lycaenion.org.marvelapp.FavoriteSeriesFragment
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
 import lycaenion.org.marvelapp.models.characterModels.Character
@@ -34,6 +37,34 @@ class CharacterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character)
+
+        var fabSearchCharacter = findViewById<FloatingActionButton>(R.id.nav_search_character)
+        var fabSearchSeries = findViewById<FloatingActionButton>(R.id.nav_search_series)
+        var fabAllCharacters = findViewById<FloatingActionButton>(R.id.nav_all_characters)
+        var fabAllSeries = findViewById<FloatingActionButton>(R.id.nav_all_series)
+        var fabFavoriteCharacters = findViewById<FloatingActionButton>(R.id.nav_show_favorite_characters)
+        var fabFavoriteSeries = findViewById<FloatingActionButton>(R.id.nav_show_favorite_series)
+
+        fabSearchCharacter.setOnClickListener {
+                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabSearchSeries.setOnClickListener {
+                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabAllCharacters.setOnClickListener {
+                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabAllSeries.setOnClickListener {
+                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabFavoriteCharacters.setOnClickListener {
+                view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
+        }
+
         btnFavorite = findViewById(R.id.add_favorite_btn)
 
         var character : Character

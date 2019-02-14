@@ -4,6 +4,7 @@ package lycaenion.org.marvelapp.activities
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
@@ -18,85 +19,58 @@ import lycaenion.org.marvelapp.FavoriteSeriesFragment
 
 import lycaenion.org.marvelapp.R
 
-class MainActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInteractionListener,
-    NavigationView.OnNavigationItemSelectedListener {
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.nav_home ->{
-                Toast.makeText(this, "You are home", Toast.LENGTH_SHORT)
-            }
-
-            R.id.nav_all_characters ->{
-                var intent = Intent(this, SearchCharacterActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_all_series ->{
-                var intent = Intent(this, SearchSeriesActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_search_character ->{
-                var intent = Intent(this, SearchCharacterActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_search_series->{
-                var intent = Intent(this, SearchSeriesActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_show_favorite_characters ->{
-                var intent = Intent(this, FavoriteCharactersActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_show_favorite_series ->{
-                println(favoriteSeriesFragment.toString())
-                Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT)
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, favoriteSeriesFragment)
-                    .addToBackStack(favoriteSeriesFragment.toString())
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-
-            }
-        }
-
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
-    }
+class MainActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInteractionListener{
+    lateinit var favoriteFragment : FavoriteSeriesFragment
 
     override fun onFragmentInteraction(uri: Uri) {
         println("hello")
     }
 
-    lateinit var favoriteSeriesFragment : FavoriteSeriesFragment
-
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         //var realm : Realm
-
+        favoriteFragment = FavoriteSeriesFragment.newInstance()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
+        var fabSearchCharacter = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_search_character)
+        var fabSearchSeries = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_search_series)
+        var fabAllCharacters = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_all_characters)
+        var fabAllSeries = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_all_series)
+        var fabFavoriteCharacters = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_show_favorite_characters)
+        var fabFavoriteSeries = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_show_favorite_series)
 
+        fabSearchCharacter.setOnClickListener {
+            view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
 
-        val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
+        fabSearchSeries.setOnClickListener {
+            view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
 
-        nav_view.setNavigationItemSelectedListener(this)
+        fabAllCharacters.setOnClickListener {
+            view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
 
-        favoriteSeriesFragment = FavoriteSeriesFragment.newInstance()
+        fabAllSeries.setOnClickListener {
+                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabFavoriteCharacters.setOnClickListener {
+            view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
+        }
+
+        fabFavoriteSeries.setOnClickListener {
+            view -> supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container,favoriteFragment)
+            .addToBackStack(favoriteFragment.toString())
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
+        }
 
 
         /*Realm.init(this)
@@ -141,22 +115,6 @@ class MainActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInter
     }
 
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     /*fun initRecyclerViw(context : Context, characters : Array<SearchResultCharacter>){
         val recyclerView : RecyclerView = findViewById(R.id.character_recycler_view)

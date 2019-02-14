@@ -58,6 +58,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     //circle imageview
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+    //Fab menu
+    implementation 'com.github.clans:fab:1.6.4'
 
 
 }

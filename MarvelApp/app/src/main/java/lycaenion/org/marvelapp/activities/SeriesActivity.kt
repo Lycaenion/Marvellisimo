@@ -4,16 +4,28 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.NavigationView
+import android.support.v4.app.FragmentTransaction
+import android.support.v4.app.NavUtils
+import android.support.v4.view.GravityCompat
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
+import com.github.clans.fab.FloatingActionButton
 import android.widget.Button
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_series.*
+import kotlinx.android.synthetic.main.app_bar_main.*
+import lycaenion.org.marvelapp.FavoriteSeriesFragment
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelSeriesHandler
 import lycaenion.org.marvelapp.models.seriesModels.Series
@@ -22,19 +34,70 @@ import lycaenion.org.marvelapp.models.databaseModels.FavoriteSeries
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener
 import lycaenion.org.marvelapp.recyclerViewAdapters.SeriesCharactersViewAdapter
 
-class SeriesActivity : AppCompatActivity() {
+class SeriesActivity : AppCompatActivity(), FavoriteSeriesFragment.OnFragmentInteractionListener {
+    override fun onFragmentInteraction(uri: Uri) {
+        println("Hello")
+    }
+
 
     private var seriesCharactersList : List<SearchResultCharacter> = emptyList()
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var adapter: SeriesCharactersViewAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnFavorite : Button
+    lateinit var favoriteFragment : FavoriteSeriesFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_series)
 
+        var fabSearchCharacter = findViewById<FloatingActionButton>(R.id.nav_search_character)
+        var fabSearchSeries = findViewById<FloatingActionButton>(R.id.nav_search_series)
+        var fabAllCharacters = findViewById<FloatingActionButton>(R.id.nav_all_characters)
+        var fabAllSeries = findViewById<FloatingActionButton>(R.id.nav_all_series)
+        var fabFavoriteCharacters = findViewById<FloatingActionButton>(R.id.nav_show_favorite_characters)
+        var fabFavoriteSeries = findViewById<FloatingActionButton>(R.id.nav_show_favorite_series)
+
+        favoriteFragment = FavoriteSeriesFragment.newInstance()
+
+        fabSearchCharacter.setOnClickListener {
+                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabSearchSeries.setOnClickListener {
+                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabAllCharacters.setOnClickListener {
+                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabAllSeries.setOnClickListener {
+                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabFavoriteCharacters.setOnClickListener {
+                view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
+        }
+
+        fabFavoriteSeries.setOnClickListener {
+                view -> supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container,favoriteFragment)
+            .addToBackStack(favoriteFragment.toString())
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
+        }
+
         btnFavorite = findViewById(R.id.add_favorite_btn)
+        favoriteFragment = FavoriteSeriesFragment.newInstance()
+
+        /*val toggle = ActionBarDrawerToggle(
+            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        nav_view.setNavigationItemSelectedListener(this)*/
 
         var series : Series
 
@@ -72,8 +135,6 @@ class SeriesActivity : AppCompatActivity() {
         setSeriesDescription(series)
         setLearnMoreBtn(series)
         setFavoriteBtn(series)
-
-
     }
 
     fun setFavoriteBtn(series: Series){
