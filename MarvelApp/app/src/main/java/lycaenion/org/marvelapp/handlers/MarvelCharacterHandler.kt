@@ -22,16 +22,11 @@ object MarvelCharacterHandler{
         .create(CharacterService::class.java)
 
     private fun getOkHttpClient() : OkHttpClient{
-        //val logging = HttpLoggingInterceptor()
-        //logging.level = HttpLoggingInterceptor.Level.BODY
 
         val builder = OkHttpClient.Builder()
         builder.addInterceptor(addHashAndKey())
-        //builder.addInterceptor(logging)
 
-        val okHttpClient = builder.build()
-
-        return okHttpClient
+        return builder.build()
     }
 
     private fun addHashAndKey() : Interceptor = Interceptor { chain ->

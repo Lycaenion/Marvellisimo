@@ -20,94 +20,51 @@ import lycaenion.org.marvelapp.FavoriteSeriesFragment
 import lycaenion.org.marvelapp.R
 
 class MainActivity : AppCompatActivity(){
+    private lateinit var fabSearchCharacter : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabSearchSeries : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabAllCharacters : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabAllSeries : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabFavoriteCharacters : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabFavoriteSeries : com.github.clans.fab.FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        //var realm : Realm
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var fabSearchCharacter = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_search_character)
-        var fabSearchSeries = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_search_series)
-        var fabAllCharacters = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_all_characters)
-        var fabAllSeries = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_all_series)
-        var fabFavoriteCharacters = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_show_favorite_characters)
-        var fabFavoriteSeries = findViewById<com.github.clans.fab.FloatingActionButton>(R.id.nav_show_favorite_series)
+        initMenu()
+    }
+
+    private fun initMenu(){
+
+        fabSearchCharacter = findViewById(R.id.nav_search_character)
+        fabSearchSeries = findViewById(R.id.nav_search_series)
+        fabAllCharacters = findViewById(R.id.nav_all_characters)
+        fabAllSeries = findViewById(R.id.nav_all_series)
+        fabFavoriteCharacters = findViewById(R.id.nav_show_favorite_characters)
+        fabFavoriteSeries = findViewById(R.id.nav_show_favorite_series)
 
         fabSearchCharacter.setOnClickListener {
-            view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
         }
 
         fabSearchSeries.setOnClickListener {
-            view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
         }
 
         fabAllCharacters.setOnClickListener {
-            view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
         }
 
         fabAllSeries.setOnClickListener {
-                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
         }
 
         fabFavoriteCharacters.setOnClickListener {
-            view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
+            startActivity(Intent(this, FavoriteCharactersActivity::class.java))
         }
-
         fabFavoriteSeries.setOnClickListener {
-                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
+            startActivity(Intent(this, FavoriteSeriesActivity::class.java))
         }
-
-
-
-        /*Realm.init(this)
-
-        val config = RealmConfiguration.Builder()
-            .schemaVersion(1)
-            .name("favoriteCharacters.realm")
-            .build()
-
-
-        realm = Realm.getInstance(config)
-
-        var list : RealmResults<FavoriteCharacter> = realm.where(FavoriteCharacter::class.java).findAll()
-        //realm.close()
-
-        for( i in list.indices){
-            println(list[i]?.name + " is in favorite characters db")
-        }*/
-
-/*        fab.setOnClickListener{view ->
-
-
-*//*
-            var intent = Intent(this, SearchCharacterActivity::class.java)
-            //intent.putExtra("id",1009546)
-            startActivity(intent)*//*
-        }*/
-
-
-
-
-
-        /*var adapter : SearchCharactersViewAdapter
-
-        MarvelCharacterHandler.getAllCharacters().observeOn(AndroidSchedulers.mainThread()).subscribe{
-            data -> initRecyclerViw(this, data.data.results)
-            println(data.data.results.size)
-
-        }*/
-
-
     }
-
-
-
-    /*fun initRecyclerViw(context : Context, characters : Array<SearchResultCharacter>){
-        val recyclerView : RecyclerView = findViewById(R.id.character_recycler_view)
-        val adapter = SearchCharactersViewAdapter(context, characters)
-        recyclerView.adapter  = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
-    }*/
 }

@@ -22,16 +22,10 @@ object MarvelSeriesHandler {
         .create(SeriesService::class.java)
 
     private fun getOkHttpClient() : OkHttpClient {
-        //val logging = HttpLoggingInterceptor()
-        //logging.level = HttpLoggingInterceptor.Level.BODY
-
         val builder = OkHttpClient.Builder()
         builder.addInterceptor(addHashAndKey())
-        //builder.addInterceptor(logging)
 
-        val okHttpClient = builder.build()
-
-        return okHttpClient
+        return builder.build()
     }
 
     private fun addHashAndKey() : Interceptor = Interceptor { chain ->
@@ -46,13 +40,6 @@ object MarvelSeriesHandler {
         val newRequest = originalRequest.newBuilder().url(urlWithParams).build()
         chain.proceed(newRequest)
     }
-
-    /*fun getAllCharacters(offset : Int) : Single<APIResponseSearchCharacter>{
-        return service.getAllCharacters(offset).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
-            println("error : ${it.message}")
-            APIResponseSearchCharacter(1, "", CharacterSearchData(emptyArray()))
-        }
-    }*/
 
     fun getAllSeries(offset : Int) : Single<APIResponseSearchSeries>{
         return service.getAllSeries(offset).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {

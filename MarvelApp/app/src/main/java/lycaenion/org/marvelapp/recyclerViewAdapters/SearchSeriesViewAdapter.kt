@@ -19,6 +19,7 @@ import lycaenion.org.marvelapp.models.databaseModels.FavoriteSeries
 import lycaenion.org.marvelapp.models.seriesModels.Series
 
 class SearchSeriesViewAdapter (var context : Context, var searchResultSeries : List<Series>) : RecyclerView.Adapter<SearchSeriesViewAdapter.ViewHolder>(){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchSeriesViewAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_listitem, parent, false)
@@ -86,9 +87,8 @@ class SearchSeriesViewAdapter (var context : Context, var searchResultSeries : L
 
     }
 
-
-
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener{
+
         val title : TextView = view.search_name
         val img : CircleImageView = view.search_thumbnail
         val favoriteIcon : ImageView = view.favorite_indicator
@@ -106,7 +106,5 @@ class SearchSeriesViewAdapter (var context : Context, var searchResultSeries : L
         override fun onClick(v: View?) {
             this.itemClickListener!!.onItemClick(adapterPosition, v!!)
         }
-
     }
-
 }

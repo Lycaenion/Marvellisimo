@@ -18,51 +18,61 @@ class FavoriteSeriesActivity : AppCompatActivity() {
     private lateinit var seriesList : RealmResults<FavoriteSeries>
     private lateinit var adapter : FavoriteSeriesViewAdapter
     private lateinit var recyclerView : RecyclerView
-    private lateinit var realm : Realm
+    private lateinit var linearLayoutManager : LinearLayoutManager
+
+    private lateinit var fabSearchCharacter : FloatingActionButton
+    private lateinit var fabSearchSeries : FloatingActionButton
+    private lateinit var fabAllCharacters : FloatingActionButton
+    private lateinit var fabAllSeries : FloatingActionButton
+    private lateinit var fabFavoriteCharacters : FloatingActionButton
+    private lateinit var fabFavoriteSeries : FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite_series)
+        initMenu()
 
-        var fabSearchCharacter = findViewById<FloatingActionButton>(R.id.nav_search_character)
-        var fabSearchSeries = findViewById<FloatingActionButton>(R.id.nav_search_series)
-        var fabAllCharacters = findViewById<FloatingActionButton>(R.id.nav_all_characters)
-        var fabAllSeries = findViewById<FloatingActionButton>(R.id.nav_all_series)
-        var fabFavoriteCharacters = findViewById<FloatingActionButton>(R.id.nav_show_favorite_characters)
-        var fabFavoriteSeries = findViewById<FloatingActionButton>(R.id.nav_show_favorite_series)
-
-        fabSearchCharacter.setOnClickListener {
-                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
-        }
-
-        fabSearchSeries.setOnClickListener {
-                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
-        }
-
-        fabAllCharacters.setOnClickListener {
-                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
-        }
-
-        fabAllSeries.setOnClickListener {
-                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
-        }
-
-        fabFavoriteCharacters.setOnClickListener {
-                view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
-        }
-
-        fabFavoriteSeries.setOnClickListener {
-                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
-        }
-
-
-
-        var linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager = LinearLayoutManager(this)
         recyclerView = findViewById(R.id.favorite_series_view)
         recyclerView.layoutManager = linearLayoutManager
         fetchSeries()
-        initAdapter()
+        //initAdapter()
     }
+
+    private fun initMenu(){
+
+        fabSearchCharacter = findViewById(R.id.nav_search_character)
+        fabSearchSeries = findViewById(R.id.nav_search_series)
+        fabAllCharacters = findViewById(R.id.nav_all_characters)
+        fabAllSeries = findViewById(R.id.nav_all_series)
+        fabFavoriteCharacters = findViewById(R.id.nav_show_favorite_characters)
+        fabFavoriteSeries = findViewById(R.id.nav_show_favorite_series)
+
+        fabSearchCharacter.setOnClickListener {
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabSearchSeries.setOnClickListener {
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabAllCharacters.setOnClickListener {
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabAllSeries.setOnClickListener {
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabFavoriteCharacters.setOnClickListener {
+            startActivity(Intent(this, FavoriteCharactersActivity::class.java))
+        }
+        fabFavoriteSeries.setOnClickListener {
+            startActivity(Intent(this, FavoriteSeriesActivity::class.java))
+        }
+    }
+
+
 
     private fun fetchSeries(){
 
@@ -73,14 +83,29 @@ class FavoriteSeriesActivity : AppCompatActivity() {
             .name("favorites.realm")
             .build()
 
-        realm = Realm.getInstance(config)
+        var realm = Realm.getInstance(config)
         seriesList = realm.where(FavoriteSeries::class.java).findAll()
+
+        for (i in seriesList.indices){
+            println(seriesList[i]!!.title)
+        }
+
+        initAdapter(seriesList)
+
+        adapter.notifyDataSetChanged()
+        //realm.close()
 
     }
 
-    private fun initAdapter(){
+    override fun onResume(){
+        super.onResume()
+        println("I have resumed")
+        fetchSeries()
+    }
+
+    private fun initAdapter(seriesList : List<FavoriteSeries>){
         adapter = FavoriteSeriesViewAdapter(seriesList)
         recyclerView.adapter = adapter
-        println("come and get me")
+        adapter.notifyDataSetChanged()
     }
 }

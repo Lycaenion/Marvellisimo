@@ -18,12 +18,19 @@ import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollLis
 class SearchCharacterActivity : AppCompatActivity() {
 
     private var characterList : List<SearchResultCharacter> = emptyList()
+    private var searchString  = ""
     private lateinit var scrollListener : EndlessRecyclerViewScrollListener
     private lateinit var adapter : SearchCharactersViewAdapter
     private lateinit var recyclerView: RecyclerView
-    private var searchString  = ""
     private lateinit var searchView : SearchView
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
+    private lateinit var fabSearchCharacter : FloatingActionButton
+    private lateinit var fabSearchSeries : FloatingActionButton
+    private lateinit var fabAllCharacters : FloatingActionButton
+    private lateinit var fabAllSeries : FloatingActionButton
+    private lateinit var fabFavoriteCharacters : FloatingActionButton
+    private lateinit var fabFavoriteSeries : FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,47 +38,49 @@ class SearchCharacterActivity : AppCompatActivity() {
 
         initMenu()
 
-        var linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager = LinearLayoutManager(this)
+
         recyclerView = findViewById(R.id.character_recycler_view)
+
         recyclerView.layoutManager = linearLayoutManager
+
         searchView = findViewById(R.id.search_character)
+
         initAdapter()
         initScrollListener(linearLayoutManager)
         setTextListener()
     }
 
-
     private fun initMenu(){
 
-        var fabSearchCharacter = findViewById<FloatingActionButton>(R.id.nav_search_character)
-        var fabSearchSeries = findViewById<FloatingActionButton>(R.id.nav_search_series)
-        var fabAllCharacters = findViewById<FloatingActionButton>(R.id.nav_all_characters)
-        var fabAllSeries = findViewById<FloatingActionButton>(R.id.nav_all_series)
-        var fabFavoriteCharacters = findViewById<FloatingActionButton>(R.id.nav_show_favorite_characters)
-        var fabFavoriteSeries = findViewById<FloatingActionButton>(R.id.nav_show_favorite_series)
-
+        fabSearchCharacter = findViewById(R.id.nav_search_character)
+        fabSearchSeries = findViewById(R.id.nav_search_series)
+        fabAllCharacters = findViewById(R.id.nav_all_characters)
+        fabAllSeries = findViewById(R.id.nav_all_series)
+        fabFavoriteCharacters = findViewById(R.id.nav_show_favorite_characters)
+        fabFavoriteSeries = findViewById(R.id.nav_show_favorite_series)
 
         fabSearchCharacter.setOnClickListener {
-                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
         }
 
         fabSearchSeries.setOnClickListener {
-                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
         }
 
         fabAllCharacters.setOnClickListener {
-                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
         }
 
         fabAllSeries.setOnClickListener {
-                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
         }
 
         fabFavoriteCharacters.setOnClickListener {
-                view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
+            startActivity(Intent(this, FavoriteCharactersActivity::class.java))
         }
         fabFavoriteSeries.setOnClickListener {
-                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
+            startActivity(Intent(this, FavoriteSeriesActivity::class.java))
         }
 
     }
@@ -84,22 +93,6 @@ class SearchCharacterActivity : AppCompatActivity() {
                 addCharacters(0, searchString)
                 return false
 
-                /*if(newString!!.isEmpty()){
-                    searchString = newString
-                }else{
-                    resetAdapter()
-                    searchString = newString
-                    addCharacters(0, searchString)
-                    resetAdapter()
-                }
-                
-                if(searchString.equals("")){
-                    resetAdapter()
-                    addCharacters(0, searchString)
-                }else{
-                    resetAdapter()
-                    addCharacters(0, searchString)
-                }*/
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -113,31 +106,8 @@ class SearchCharacterActivity : AppCompatActivity() {
                 addCharacters(search = searchString)
                 return false
 
-                /*if(query!!.isEmpty()){
-                    searchString = ""
-                }else{
-                    searchString = query!!
-                }
-
-                if(searchString.equals("")){
-                    resetAdapter()
-                    addCharacters(0, searchString)
-                }else{
-                    resetAdapter()
-                    addCharacters(0, searchString)
-                    resetAdapter()
-                }*/
-                return false
             }
         })
-    }
-
-    private fun resetAdapter(){
-        scrollListener.resetState()
-        adapter.emptyList()
-        characterList = emptyList()
-        adapter.addCharacters(characterList)
-        //adapter.notifyDataSetChanged()
     }
 
     @SuppressLint("CheckResult")
@@ -160,30 +130,25 @@ class SearchCharacterActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     fun addCharacters(offset : Int = 10, search: String){
-            if (offset == 0){
-                scrollListener.resetState()
-                adapter.emptyList()
-                characterList = emptyList()
-                /*MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
-                    adapter.addCharacters(characterList)
-                    adapter.notifyDataSetChanged()
-                }*/
+
+        if (offset == 0){
+
+            scrollListener.resetState()
+            adapter.emptyList()
+            characterList = emptyList()
+
+        }
+
+        if(search.isEmpty()){
+            MarvelCharacterHandler.getAllCharacters(offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
+                adapter.addCharacters(characterList)
             }
 
-            if(search.isEmpty()){
-                //if this function stops working, add following rows here:
-                //var currentSize : Int
-                //currentSize = adapter.itemCount
-                MarvelCharacterHandler.getAllCharacters(offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
-                    adapter.addCharacters(characterList)
-                    //adapter.notifyDataSetChanged()
-                }
-            }else{
-                MarvelCharacterHandler.searchCharacter(search, offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
-                    adapter.addCharacters(characterList)
-                    //println(characterList.size)
-                    adapter.notifyDataSetChanged()
-                }
+        }else{
+            MarvelCharacterHandler.searchCharacter(search, offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
+                adapter.addCharacters(characterList)
+                adapter.notifyDataSetChanged()
+            }
         }
     }
 }

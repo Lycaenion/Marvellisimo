@@ -25,6 +25,11 @@ class FavoriteSeriesViewAdapter(var favoritesList : List<FavoriteSeries>) : Recy
         return favoritesList.size
     }
 
+   fun uppdateList(list: List<FavoriteSeries>){
+       favoritesList = list
+       notifyDataSetChanged()
+   }
+
     override fun onBindViewHolder(viewHolder : ViewHolder, position : Int) {
         Glide.with(viewHolder.context)
             .asBitmap()

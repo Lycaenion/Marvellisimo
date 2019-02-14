@@ -1,5 +1,6 @@
 package lycaenion.org.marvelapp.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
@@ -43,75 +44,76 @@ class SeriesActivity : AppCompatActivity() {
     private lateinit var adapter: SeriesCharactersViewAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnFavorite : Button
-    lateinit var favoriteFragment : FavoriteSeriesFragment
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var btnLearnMore : Button
 
+    private lateinit var fabSearchCharacter : FloatingActionButton
+    private lateinit var fabSearchSeries : FloatingActionButton
+    private lateinit var fabAllCharacters : FloatingActionButton
+    private lateinit var fabAllSeries : FloatingActionButton
+    private lateinit var fabFavoriteCharacters : FloatingActionButton
+    private lateinit var fabFavoriteSeries : FloatingActionButton
+
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_series)
-
-        var fabSearchCharacter = findViewById<FloatingActionButton>(R.id.nav_search_character)
-        var fabSearchSeries = findViewById<FloatingActionButton>(R.id.nav_search_series)
-        var fabAllCharacters = findViewById<FloatingActionButton>(R.id.nav_all_characters)
-        var fabAllSeries = findViewById<FloatingActionButton>(R.id.nav_all_series)
-        var fabFavoriteCharacters = findViewById<FloatingActionButton>(R.id.nav_show_favorite_characters)
-        var fabFavoriteSeries = findViewById<FloatingActionButton>(R.id.nav_show_favorite_series)
-
-        fabSearchCharacter.setOnClickListener {
-                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
-        }
-
-        fabSearchSeries.setOnClickListener {
-                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
-        }
-
-        fabAllCharacters.setOnClickListener {
-                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
-        }
-
-        fabAllSeries.setOnClickListener {
-                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
-        }
-
-        fabFavoriteCharacters.setOnClickListener {
-                view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
-        }
-
-        fabFavoriteSeries.setOnClickListener {
-                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
-        }
-
+        initMenu()
 
         btnFavorite = findViewById(R.id.add_favorite_btn)
 
-        /*val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        nav_view.setNavigationItemSelectedListener(this)*/
-
         var series : Series
 
-        var id : Int
+        var id = intent.extras.getInt("id")
 
-        id = intent.extras.getInt("id")
-
-        MarvelSeriesHandler.getSeries(id).observeOn(AndroidSchedulers.mainThread()).subscribe({
+        MarvelSeriesHandler.getSeries(id).observeOn(AndroidSchedulers.mainThread()).subscribe {
             response -> series = response.data.results[0]
-            println(response.code)
             setSeriesView(series)
-        })
+            println("getting info for " + series.title)
+        }
 
-        var linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager = LinearLayoutManager(this)
         recyclerView = findViewById(R.id.characters_in_series)
         recyclerView.layoutManager = linearLayoutManager
         initAdapter(id)
         initScrollListener(linearLayoutManager, id)
 
-
     }
 
-    fun setSeriesView(series : Series){
+    private fun initMenu(){
+
+        fabSearchCharacter = findViewById(R.id.nav_search_character)
+        fabSearchSeries = findViewById(R.id.nav_search_series)
+        fabAllCharacters = findViewById(R.id.nav_all_characters)
+        fabAllSeries = findViewById(R.id.nav_all_series)
+        fabFavoriteCharacters = findViewById(R.id.nav_show_favorite_characters)
+        fabFavoriteSeries = findViewById(R.id.nav_show_favorite_series)
+
+        fabSearchCharacter.setOnClickListener {
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabSearchSeries.setOnClickListener {
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabAllCharacters.setOnClickListener {
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabAllSeries.setOnClickListener {
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabFavoriteCharacters.setOnClickListener {
+            startActivity(Intent(this, FavoriteCharactersActivity::class.java))
+        }
+        fabFavoriteSeries.setOnClickListener {
+            startActivity(Intent(this, FavoriteSeriesActivity::class.java))
+        }
+    }
+
+    private fun setSeriesView(series : Series){
         val imgUrl = series.thumbnail.path+"."+series.thumbnail.extension
 
         series_title.text = series.title
@@ -122,15 +124,17 @@ class SeriesActivity : AppCompatActivity() {
             .load(imgUrl)
             .into(series_thumbnail)
 
-        println("I got here")
+        println("setting upp")
+
         setSeriesDescription(series)
         setLearnMoreBtn(series)
         setFavoriteBtn(series)
+        println("setting up has been done")
     }
 
-    fun setFavoriteBtn(series: Series){
+    private fun setFavoriteBtn(series: Series){
+
         if(checkIfSeriesIsFavorite(series)){
-            btnFavorite.text = "Remove from favorites"
             removeFavorite(series)
         }else{
             addFavorites(series)
@@ -138,7 +142,18 @@ class SeriesActivity : AppCompatActivity() {
 
     }
 
-    fun addFavorites(series: Series){
+    private fun setSeriesDescription(series: Series){
+
+        if(series.description == ""){
+            series_description.text = "No description Available"
+        }else{
+            series_description.text = series.description
+        }
+    }
+
+    private fun addFavorites(series: Series){
+        btnFavorite.text = "Add to favorites"
+        println("Now it is possible to add character")
         Realm.init(this)
 
         val config = RealmConfiguration.Builder()
@@ -153,18 +168,49 @@ class SeriesActivity : AppCompatActivity() {
             favoriteSeries.title = series.title
             favoriteSeries.imgPath = series.thumbnail.path+"."+series.thumbnail.extension
 
-            println("Adding " + favoriteSeries.title + " to db")
-
             val realm = Realm.getInstance(config)
             realm.executeTransaction {
                 realm -> realm.insertOrUpdate(favoriteSeries)
             }
             realm.close()
-            btnFavorite.text = "Remove from favorites"
+            setFavoriteBtn(series)
+            //setSeriesView(series)
+            //btnFavorite.text = "Remove from favorites"
         }
     }
 
     private fun removeFavorite(series: Series){
+
+        btnFavorite.text = "Remove from favorites"
+
+        Realm.init(this)
+
+        val config = RealmConfiguration.Builder()
+            .schemaVersion(1)
+            .name("favorites.realm")
+            .build()
+
+        btnFavorite.setOnClickListener {
+
+            var realm = Realm.getInstance(config)
+            realm.executeTransaction {
+                it.where(FavoriteSeries::class.java).equalTo("id", series.id)
+                    .findAll()
+                    .deleteAllFromRealm()
+            }
+
+            realm.close()
+            setFavoriteBtn(series)
+
+            //btnFavorite.text = "Add to Favorites "
+
+        }
+    }
+
+
+
+
+    private fun checkIfSeriesIsFavorite(series: Series) : Boolean{
         Realm.init(this)
 
         val config = RealmConfiguration.Builder()
@@ -174,55 +220,27 @@ class SeriesActivity : AppCompatActivity() {
 
         var realm = Realm.getInstance(config)
 
-        realm.executeTransaction{
-            var result : RealmResults<FavoriteSeries> =
-                realm.where(FavoriteSeries::class.java).equalTo("id", series.id).findAll()
-            result.deleteAllFromRealm()
-        }
-        realm.close()
-        setSeriesView(series)
-
-        btnFavorite.text = "Add to favorites"
-
-    }
-
-    private fun setSeriesDescription(series: Series){
-        if(series.description == ""){
-            series_description.text = "No description Available"
-        }else{
-            series_description.text = series.description
-        }
-    }
-
-    private fun checkIfSeriesIsFavorite(series: Series) : Boolean{
-        Realm.init(this)
-
-        val config = RealmConfiguration.Builder()
-            .schemaVersion(1)
-            .name("favoriteSeries.realm")
-            .build()
-
-        var realm = Realm.getInstance(config)
-
-        var favoriteSeries : FavoriteSeries? = realm.where(FavoriteSeries::class.java)
+        val favorite = realm.where<FavoriteSeries>(FavoriteSeries::class.java)
             .equalTo("id", series.id)
             .findFirst()
-        realm.close()
+        //realm.close()
 
-        return favoriteSeries != null
+        return favorite != null
 
     }
 
     private fun setLearnMoreBtn(series : Series){
-        val btn_learn_more = findViewById<Button>(R.id.wiki_button)
+
+        btnLearnMore = findViewById(R.id.wiki_button)
 
         for(i in series.urls.indices) {
 
-            btn_learn_more.setOnClickListener {
+            btnLearnMore.setOnClickListener {
 
                 var openURL = Intent(Intent.ACTION_VIEW)
                 openURL.data = Uri.parse(series.urls[i].url)
                 startActivity(openURL)
+
             }
         }
     }
@@ -235,29 +253,25 @@ class SeriesActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("CheckResult")
     fun addCharacters(offset : Int, id: Int){
         if(offset == 0){
             scrollListener.resetState()
             seriesCharactersList  = emptyList()
             adapter.addCharacters(seriesCharactersList)
         }else{
-            MarvelSeriesHandler.getCharactersInSeries(offset, id).observeOn(Schedulers.io()).subscribe({
-                response -> seriesCharactersList = seriesCharactersList + response.data.results.toList()
+            MarvelSeriesHandler.getCharactersInSeries(offset, id).observeOn(Schedulers.io()).subscribe { response -> seriesCharactersList = seriesCharactersList + response.data.results.toList()
                 adapter.addCharacters(seriesCharactersList)
                 adapter.notifyDataSetChanged()
-            })
+            }
         }
     }
 
+    @SuppressLint("CheckResult")
     private fun initAdapter(id : Int){
-        MarvelSeriesHandler.getCharactersInSeries(0 , id).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                response -> seriesCharactersList = seriesCharactersList + response.data.results.asList()
+        MarvelSeriesHandler.getCharactersInSeries(0 , id).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesCharactersList = seriesCharactersList + response.data.results.asList()
             adapter = SeriesCharactersViewAdapter(this, seriesCharactersList)
             recyclerView.adapter = adapter
-        })
+        }
     }
-
-
-
-
 }

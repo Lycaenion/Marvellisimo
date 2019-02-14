@@ -23,51 +23,60 @@ class SearchSeriesActivity : AppCompatActivity() {
     private lateinit var recyclerView : RecyclerView
     private var searchString = ""
     private lateinit var searchView : SearchView
+    private lateinit var linearLayoutManager: LinearLayoutManager
+
+    private lateinit var fabSearchCharacter : FloatingActionButton
+    private lateinit var fabSearchSeries : FloatingActionButton
+    private lateinit var fabAllCharacters : FloatingActionButton
+    private lateinit var fabAllSeries : FloatingActionButton
+    private lateinit var fabFavoriteCharacters : FloatingActionButton
+    private lateinit var fabFavoriteSeries : FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_series)
+        initMenu()
 
-
-        var fabSearchCharacter = findViewById<FloatingActionButton>(R.id.nav_search_character)
-        var fabSearchSeries = findViewById<FloatingActionButton>(R.id.nav_search_series)
-        var fabAllCharacters = findViewById<FloatingActionButton>(R.id.nav_all_characters)
-        var fabAllSeries = findViewById<FloatingActionButton>(R.id.nav_all_series)
-        var fabFavoriteCharacters = findViewById<FloatingActionButton>(R.id.nav_show_favorite_characters)
-        var fabFavoriteSeries = findViewById<FloatingActionButton>(R.id.nav_show_favorite_series)
-
-        fabSearchCharacter.setOnClickListener {
-                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
-        }
-
-        fabSearchSeries.setOnClickListener {
-                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
-        }
-
-        fabAllCharacters.setOnClickListener {
-                view -> startActivity(Intent(this, SearchCharacterActivity::class.java))
-        }
-
-        fabAllSeries.setOnClickListener {
-                view -> startActivity(Intent(this, SearchSeriesActivity::class.java))
-        }
-
-        fabFavoriteCharacters.setOnClickListener {
-                view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
-        }
-        fabFavoriteSeries.setOnClickListener {
-                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
-        }
-
-
-        var linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager = LinearLayoutManager(this)
         recyclerView = findViewById(R.id.series_recycler_view)
         recyclerView.layoutManager = linearLayoutManager
         searchView = findViewById(R.id.search_series)
         initAdapter()
         initScrollListener(linearLayoutManager)
         setTextListener()
+    }
 
+    private fun initMenu(){
+
+        fabSearchCharacter = findViewById(R.id.nav_search_character)
+        fabSearchSeries = findViewById(R.id.nav_search_series)
+        fabAllCharacters = findViewById(R.id.nav_all_characters)
+        fabAllSeries = findViewById(R.id.nav_all_series)
+        fabFavoriteCharacters = findViewById(R.id.nav_show_favorite_characters)
+        fabFavoriteSeries = findViewById(R.id.nav_show_favorite_series)
+
+        fabSearchCharacter.setOnClickListener {
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabSearchSeries.setOnClickListener {
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabAllCharacters.setOnClickListener {
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
+
+        fabAllSeries.setOnClickListener {
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
+
+        fabFavoriteCharacters.setOnClickListener {
+            startActivity(Intent(this, FavoriteCharactersActivity::class.java))
+        }
+        fabFavoriteSeries.setOnClickListener {
+            startActivity(Intent(this, FavoriteSeriesActivity::class.java))
+        }
     }
 
     private fun setTextListener(){
@@ -90,30 +99,9 @@ class SearchSeriesActivity : AppCompatActivity() {
                 adapter.emptyList()
                 addSeries(search = searchString)
                 return false
-                /*if(query!!.isEmpty()){
-                    searchString = ""
-                }else{
-                    searchString = query!!
-                }
-
-                if(searchString.equals("")){
-                    resetAdapter()
-                    addSeries(0,searchString)
-                }else{
-                    resetAdapter()
-                    addSeries(0, searchString)
-                    resetAdapter()
-                }*/
             }
         })
     }
-
-   /* private fun resetAdapter(){
-        scrollListener.resetState()
-        adapter.emptyList()
-        seriesList = emptyList()
-        adapter.addSeries(seriesList)
-    }*/
 
     @SuppressLint("CheckResult")
     private fun initAdapter(){
@@ -135,29 +123,25 @@ class SearchSeriesActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     fun addSeries(offset : Int = 0, search: String){
-            if(offset == 0){
-                scrollListener.resetState()
-                adapter.emptyList()
-                seriesList = emptyList()
-               /* MarvelSeriesHandler.getAllSeries(0).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
-                    adapter.addSeries(seriesList)
-                    //adapter.notifyDataSetChanged()
-                }*/
-            }
 
-            if(search.isEmpty()){
-                MarvelSeriesHandler.getAllSeries(offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
-                    adapter.addSeries(seriesList)
-                    //adapter.notifyDataSetChanged()
-                }
-            } else{
-                //adapter.emptyList()
-                MarvelSeriesHandler.searchSeries(searchString, offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
-                    adapter.addSeries(seriesList)
-                    println("the size of seriesList after add series with search : " + seriesList.size)
-                    adapter.notifyDataSetChanged()
+        if(offset == 0){
 
-                }
+            scrollListener.resetState()
+            adapter.emptyList()
+            seriesList = emptyList()
+
+        }
+
+        if(search.isEmpty()){
+            MarvelSeriesHandler.getAllSeries(offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
+                adapter.addSeries(seriesList)
             }
+        }else{
+            MarvelSeriesHandler.searchSeries(searchString, offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
+                adapter.addSeries(seriesList)
+                adapter.notifyDataSetChanged()
+
+            }
+        }
     }
 }

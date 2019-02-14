@@ -41,26 +41,6 @@ class SearchCharactersViewAdapter(var context : Context, var searchResultCharact
         notifyDataSetChanged()
     }
 
-
-    private fun checkIfFavorite(id : Int) : Boolean{
-
-        var realm : Realm
-        Realm.init(context)
-
-        val config = RealmConfiguration.Builder()
-            .schemaVersion(1)
-            .name("favorites.realm")
-            .build()
-        realm = Realm.getInstance(config)
-
-        var favoriteCharacter : FavoriteCharacter? = realm.where(FavoriteCharacter::class.java)
-            .equalTo("id", id)
-            .findFirst()
-        realm.close()
-
-        return favoriteCharacter != null
-    }
-
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         Glide.with(context)
             .asBitmap()
@@ -85,10 +65,31 @@ class SearchCharactersViewAdapter(var context : Context, var searchResultCharact
 
     }
 
+    private fun checkIfFavorite(id : Int) : Boolean{
+
+        var realm : Realm
+        Realm.init(context)
+
+        val config = RealmConfiguration.Builder()
+            .schemaVersion(1)
+            .name("favorites.realm")
+            .build()
+        realm = Realm.getInstance(config)
+
+        var favoriteCharacter : FavoriteCharacter? = realm.where(FavoriteCharacter::class.java)
+            .equalTo("id", id)
+            .findFirst()
+
+        realm.close()
+
+        return favoriteCharacter != null
+    }
+
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener{
-       val imageName : TextView = view.search_name
-       val image : CircleImageView = view.search_thumbnail
-       val favoriteIcon : ImageView = view.favorite_indicator
+
+        val imageName : TextView = view.search_name
+        val image : CircleImageView = view.search_thumbnail
+        val favoriteIcon : ImageView = view.favorite_indicator
 
         private var itemClickListener : OnItemClickListener? = null
 
@@ -105,7 +106,4 @@ class SearchCharactersViewAdapter(var context : Context, var searchResultCharact
         }
 
     }
-
-
-
 }
