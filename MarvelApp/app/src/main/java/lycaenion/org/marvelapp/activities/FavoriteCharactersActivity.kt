@@ -53,9 +53,7 @@ class FavoriteCharactersActivity : AppCompatActivity() {
                 view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
         }
         fabFavoriteSeries.setOnClickListener {
-            fabFavoriteSeries.setOnClickListener {
                     view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
-            }
         }
 
 

@@ -52,10 +52,9 @@ class FavoriteSeriesActivity : AppCompatActivity() {
         }
 
         fabFavoriteSeries.setOnClickListener {
-            fabFavoriteSeries.setOnClickListener {
-                    view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
-            }
+                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
         }
+
 
 
         var linearLayoutManager = LinearLayoutManager(this)
@@ -66,7 +65,6 @@ class FavoriteSeriesActivity : AppCompatActivity() {
     }
 
     private fun fetchSeries(){
-        var list  : RealmResults<FavoriteSeries>
 
         Realm.init(this)
 

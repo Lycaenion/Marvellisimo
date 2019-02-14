@@ -64,6 +64,10 @@ class CharacterActivity : AppCompatActivity() {
         fabFavoriteCharacters.setOnClickListener {
                 view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
         }
+        fabFavoriteSeries.setOnClickListener {
+                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
+        }
+
 
         btnFavorite = findViewById(R.id.add_favorite_btn)
 

@@ -77,10 +77,9 @@ class SeriesActivity : AppCompatActivity() {
         }
 
         fabFavoriteSeries.setOnClickListener {
-            fabFavoriteSeries.setOnClickListener {
-                    view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
-            }
+                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
         }
+
 
         btnFavorite = findViewById(R.id.add_favorite_btn)
 

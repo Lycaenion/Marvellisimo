@@ -57,10 +57,9 @@ class SearchSeriesActivity : AppCompatActivity() {
                 view -> startActivity(Intent(this, FavoriteCharactersActivity::class.java))
         }
         fabFavoriteSeries.setOnClickListener {
-            fabFavoriteSeries.setOnClickListener {
-                    view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
-            }
+                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
         }
+
 
         var linearLayoutManager = LinearLayoutManager(this)
         recyclerView = findViewById(R.id.series_recycler_view)

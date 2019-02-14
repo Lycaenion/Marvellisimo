@@ -56,10 +56,9 @@ class MainActivity : AppCompatActivity(){
         }
 
         fabFavoriteSeries.setOnClickListener {
-            fabFavoriteSeries.setOnClickListener {
-                    view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
-            }
+                view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
         }
+
 
 
         /*Realm.init(this)
