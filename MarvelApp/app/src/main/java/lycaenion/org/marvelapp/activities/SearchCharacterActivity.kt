@@ -1,26 +1,25 @@
 package lycaenion.org.marvelapp.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.SearchView
 import com.github.clans.fab.FloatingActionButton
 import io.reactivex.android.schedulers.AndroidSchedulers
-import lycaenion.org.marvelapp.FavoriteSeriesFragment
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
 import lycaenion.org.marvelapp.models.characterModels.SearchResultCharacter
-import lycaenion.org.marvelapp.recyclerViewAdapters.CharactersViewAdapter
+import lycaenion.org.marvelapp.recyclerViewAdapters.SearchCharactersViewAdapter
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener
 
 class SearchCharacterActivity : AppCompatActivity() {
 
     private var characterList : List<SearchResultCharacter> = emptyList()
     private lateinit var scrollListener : EndlessRecyclerViewScrollListener
-    private lateinit var adapter : CharactersViewAdapter
+    private lateinit var adapter : SearchCharactersViewAdapter
     private lateinit var recyclerView: RecyclerView
     private var searchString  = ""
     private lateinit var searchView : SearchView
@@ -30,6 +29,19 @@ class SearchCharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_character)
 
+        initMenu()
+
+        var linearLayoutManager = LinearLayoutManager(this)
+        recyclerView = findViewById(R.id.character_recycler_view)
+        recyclerView.layoutManager = linearLayoutManager
+        searchView = findViewById(R.id.search_character)
+        initAdapter()
+        initScrollListener(linearLayoutManager)
+        setTextListener()
+    }
+
+
+    private fun initMenu(){
 
         var fabSearchCharacter = findViewById<FloatingActionButton>(R.id.nav_search_character)
         var fabSearchSeries = findViewById<FloatingActionButton>(R.id.nav_search_series)
@@ -62,42 +74,46 @@ class SearchCharacterActivity : AppCompatActivity() {
                 view -> startActivity(Intent(this, FavoriteSeriesActivity::class.java))
         }
 
-
-
-        var linearLayoutManager = LinearLayoutManager(this)
-        recyclerView = findViewById(R.id.character_recycler_view)
-        recyclerView.layoutManager = linearLayoutManager
-        searchView = findViewById(R.id.search_character)
-        initAdapter()
-        initScrollListener(linearLayoutManager)
-        setTextListener()
     }
 
     private fun setTextListener(){
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextChange(newString: String?): Boolean {
+            override fun onQueryTextChange(newText: String): Boolean {
+                searchString = newText
+                adapter.emptyList()
+                addCharacters(0, searchString)
+                return false
 
-                if(newString!!.isEmpty()){
-                    searchString = ""
-                }else{
+                /*if(newString!!.isEmpty()){
                     searchString = newString
+                }else{
+                    resetAdapter()
+                    searchString = newString
+                    addCharacters(0, searchString)
+                    resetAdapter()
                 }
                 
                 if(searchString.equals("")){
                     resetAdapter()
                     addCharacters(0, searchString)
-
                 }else{
                     resetAdapter()
                     addCharacters(0, searchString)
-                    resetAdapter()
-                }
-                return false
+                }*/
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
 
-                if(query!!.isEmpty()){
+                if(searchString == query){
+                    return false
+                }
+
+                searchString = query!!
+                adapter.emptyList()
+                addCharacters(search = searchString)
+                return false
+
+                /*if(query!!.isEmpty()){
                     searchString = ""
                 }else{
                     searchString = query!!
@@ -107,8 +123,10 @@ class SearchCharacterActivity : AppCompatActivity() {
                     resetAdapter()
                     addCharacters(0, searchString)
                 }else{
+                    resetAdapter()
                     addCharacters(0, searchString)
-                }
+                    resetAdapter()
+                }*/
                 return false
             }
         })
@@ -116,17 +134,19 @@ class SearchCharacterActivity : AppCompatActivity() {
 
     private fun resetAdapter(){
         scrollListener.resetState()
+        adapter.emptyList()
         characterList = emptyList()
         adapter.addCharacters(characterList)
-        adapter.notifyDataSetChanged()
+        //adapter.notifyDataSetChanged()
     }
 
+    @SuppressLint("CheckResult")
     private fun initAdapter(){
-        MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            response -> characterList = characterList + response.data.results.asList()
-            adapter = CharactersViewAdapter(this, characterList)
+        MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe {
+                response -> characterList = characterList + response.data.results.asList()
+            adapter = SearchCharactersViewAdapter(this, characterList)
             recyclerView.adapter = adapter
-        })
+        }
     }
 
     private fun initScrollListener(linearLayoutManager: LinearLayoutManager){
@@ -138,37 +158,32 @@ class SearchCharacterActivity : AppCompatActivity() {
         recyclerView.addOnScrollListener(scrollListener)
     }
 
-    fun addCharacters(offset : Int, search: String){
-
-        if(search.equals("")){
+    @SuppressLint("CheckResult")
+    fun addCharacters(offset : Int = 10, search: String){
             if (offset == 0){
                 scrollListener.resetState()
+                adapter.emptyList()
                 characterList = emptyList()
-                adapter.notifyDataSetChanged()
-                MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        response -> characterList = characterList + response.data.results.asList()
+                /*MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
                     adapter.addCharacters(characterList)
                     adapter.notifyDataSetChanged()
-                })
-            }else{
+                }*/
+            }
+
+            if(search.isEmpty()){
                 //if this function stops working, add following rows here:
                 //var currentSize : Int
                 //currentSize = adapter.itemCount
-                MarvelCharacterHandler.getAllCharacters(offset).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        response -> characterList = characterList + response.data.results.asList()
+                MarvelCharacterHandler.getAllCharacters(offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
                     adapter.addCharacters(characterList)
+                    //adapter.notifyDataSetChanged()
+                }
+            }else{
+                MarvelCharacterHandler.searchCharacter(search, offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
+                    adapter.addCharacters(characterList)
+                    //println(characterList.size)
                     adapter.notifyDataSetChanged()
-                })
-            }
-
-        }else{
-
-            MarvelCharacterHandler.searchCharacter(search).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                response -> characterList = characterList + response.data.results.asList()
-                adapter.addCharacters(characterList)
-                println(characterList.size)
-                adapter.notifyDataSetChanged()
-            })
+                }
         }
     }
 }

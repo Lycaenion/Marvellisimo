@@ -4,23 +4,22 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.SearchView
 import com.github.clans.fab.FloatingActionButton
 import io.reactivex.android.schedulers.AndroidSchedulers
-import lycaenion.org.marvelapp.FavoriteSeriesFragment
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelSeriesHandler
 import lycaenion.org.marvelapp.models.seriesModels.Series
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener
-import lycaenion.org.marvelapp.recyclerViewAdapters.SeriesViewAdapter
+import lycaenion.org.marvelapp.recyclerViewAdapters.SearchSeriesViewAdapter
 
 class SearchSeriesActivity : AppCompatActivity() {
+
     private var seriesList : List<Series> = emptyList()
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
-    private lateinit var adapter: SeriesViewAdapter
+    private lateinit var adapter: SearchSeriesViewAdapter
     private lateinit var recyclerView : RecyclerView
     private var searchString = ""
     private lateinit var searchView : SearchView
@@ -73,8 +72,25 @@ class SearchSeriesActivity : AppCompatActivity() {
 
     private fun setTextListener(){
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                searchString = newText
+                adapter.emptyList()
+                addSeries(0, searchString)
+                return false
+            }
+
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(query!!.isEmpty()){
+
+                if(searchString == query){
+                    return false
+                }
+
+                searchString = query!!
+                adapter.emptyList()
+                addSeries(search = searchString)
+                return false
+                /*if(query!!.isEmpty()){
                     searchString = ""
                 }else{
                     searchString = query!!
@@ -87,48 +103,25 @@ class SearchSeriesActivity : AppCompatActivity() {
                     resetAdapter()
                     addSeries(0, searchString)
                     resetAdapter()
-                }
-                return false
+                }*/
             }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if(newText!!.isEmpty()){
-                    searchString = newText
-                }else{
-                    searchString = newText
-                }
-
-                if(searchString.equals("")){
-                    resetAdapter()
-                    addSeries(0, searchString)
-                    resetAdapter()
-                }else{
-                    resetAdapter()
-                    println("size: " + seriesList.size)
-                    addSeries(0, searchString)
-                    resetAdapter()
-                }
-
-                return false
-            }
-
         })
     }
 
-    private fun resetAdapter(){
+   /* private fun resetAdapter(){
         scrollListener.resetState()
         adapter.emptyList()
         seriesList = emptyList()
         adapter.addSeries(seriesList)
-    }
+    }*/
 
     @SuppressLint("CheckResult")
     private fun initAdapter(){
-        MarvelSeriesHandler.getAllSeries(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            response -> seriesList = seriesList + response.data.results.asList()
-            adapter = SeriesViewAdapter(this, seriesList)
+        MarvelSeriesHandler.getAllSeries(0).observeOn(AndroidSchedulers.mainThread()).subscribe {
+                response -> seriesList = seriesList + response.data.results.asList()
+            adapter = SearchSeriesViewAdapter(this, seriesList)
             recyclerView.adapter = adapter
-        })
+        }
     }
 
     private fun initScrollListener(linearLayoutManager: LinearLayoutManager){
@@ -141,29 +134,30 @@ class SearchSeriesActivity : AppCompatActivity() {
     }
 
     @SuppressLint("CheckResult")
-    fun addSeries(offset : Int, search: String){
-        if(search.equals("")){
+    fun addSeries(offset : Int = 0, search: String){
             if(offset == 0){
                 scrollListener.resetState()
-                adapter.notifyDataSetChanged()
-                MarvelSeriesHandler.getAllSeries(0).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                    response -> seriesList = seriesList + response.data.results.asList()
+                adapter.emptyList()
+                seriesList = emptyList()
+               /* MarvelSeriesHandler.getAllSeries(0).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
                     adapter.addSeries(seriesList)
-                    adapter.notifyDataSetChanged()
-                })
-            }else{
-                MarvelSeriesHandler.getAllSeries(offset).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                    response -> seriesList = seriesList + response.data.results.asList()
-                    adapter.addSeries(seriesList)
-                    adapter.notifyDataSetChanged()
-                })
+                    //adapter.notifyDataSetChanged()
+                }*/
             }
-        }else{
-            MarvelSeriesHandler.searchSeries(searchString, offset).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                response -> seriesList = seriesList + response.data.results.asList()
-                adapter.addSeries(seriesList)
-                adapter.notifyDataSetChanged()
-            })
-        }
+
+            if(search.isEmpty()){
+                MarvelSeriesHandler.getAllSeries(offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
+                    adapter.addSeries(seriesList)
+                    //adapter.notifyDataSetChanged()
+                }
+            } else{
+                //adapter.emptyList()
+                MarvelSeriesHandler.searchSeries(searchString, offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
+                    adapter.addSeries(seriesList)
+                    println("the size of seriesList after add series with search : " + seriesList.size)
+                    adapter.notifyDataSetChanged()
+
+                }
+            }
     }
 }

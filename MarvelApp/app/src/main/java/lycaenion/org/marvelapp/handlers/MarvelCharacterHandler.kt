@@ -68,8 +68,8 @@ object MarvelCharacterHandler{
         }
     }
 
-    fun searchCharacter(name : String) : Single<APIResponseSearchCharacter>{
-        return service.searchCharacter(name).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
+    fun searchCharacter(name : String, offset: Int) : Single<APIResponseSearchCharacter>{
+        return service.searchCharacter(name, offset).subscribeOn(Schedulers.io()).retry(10).onErrorReturn {
             println("error:  ${it.message}")
             APIResponseSearchCharacter(1, "", CharacterSearchData(emptyArray()))
         }

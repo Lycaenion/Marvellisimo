@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(){
 
 
 
-        /*var adapter : CharactersViewAdapter
+        /*var adapter : SearchCharactersViewAdapter
 
         MarvelCharacterHandler.getAllCharacters().observeOn(AndroidSchedulers.mainThread()).subscribe{
             data -> initRecyclerViw(this, data.data.results)
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(){
 
     /*fun initRecyclerViw(context : Context, characters : Array<SearchResultCharacter>){
         val recyclerView : RecyclerView = findViewById(R.id.character_recycler_view)
-        val adapter = CharactersViewAdapter(context, characters)
+        val adapter = SearchCharactersViewAdapter(context, characters)
         recyclerView.adapter  = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
     }*/

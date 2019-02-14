@@ -18,8 +18,8 @@ import lycaenion.org.marvelapp.activities.SeriesActivity
 import lycaenion.org.marvelapp.models.databaseModels.FavoriteSeries
 import lycaenion.org.marvelapp.models.seriesModels.Series
 
-class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Series>) : RecyclerView.Adapter<SeriesViewAdapter.ViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewAdapter.ViewHolder {
+class SearchSeriesViewAdapter (var context : Context, var searchResultSeries : List<Series>) : RecyclerView.Adapter<SearchSeriesViewAdapter.ViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchSeriesViewAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_listitem, parent, false)
         return ViewHolder(view)
@@ -31,7 +31,11 @@ class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Se
 
     fun addSeries(seriesList : List<Series>){
         searchResultSeries = seriesList
+        notifyDataSetChanged()
+    }
 
+    fun emptyList() {
+        searchResultSeries = kotlin.collections.emptyList()
         notifyDataSetChanged()
     }
 
@@ -47,6 +51,8 @@ class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Se
             Glide.with(context)
                 .load(R.drawable.ic_favorite_heart)
                 .into(viewHolder.favoriteIcon)
+        }else{
+            viewHolder.favoriteIcon.visibility = View.INVISIBLE
         }
 
         viewHolder.setOnItemClickListener(object: OnItemClickListener {
@@ -58,7 +64,7 @@ class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Se
         })
     }
 
-    fun checkIfFavorite(id : Int): Boolean{
+    private fun checkIfFavorite(id : Int): Boolean{
 
         var realm : Realm
         Realm.init(context)
@@ -80,9 +86,7 @@ class SeriesViewAdapter (var context : Context, var searchResultSeries : List<Se
 
     }
 
-    fun emptyList() {
-        searchResultSeries = kotlin.collections.emptyList()
-    }
+
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener{
         val title : TextView = view.search_name

@@ -18,9 +18,9 @@ import lycaenion.org.marvelapp.activities.CharacterActivity
 import lycaenion.org.marvelapp.models.characterModels.SearchResultCharacter
 import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
 
-class CharactersViewAdapter(var context : Context, var searchResultCharacters : List<SearchResultCharacter> ) : RecyclerView.Adapter<CharactersViewAdapter.ViewHolder>(){
+class SearchCharactersViewAdapter(var context : Context, var searchResultCharacters : List<SearchResultCharacter> ) : RecyclerView.Adapter<SearchCharactersViewAdapter.ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchCharactersViewAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_listitem, parent, false)
         return ViewHolder(view)
@@ -32,19 +32,19 @@ class CharactersViewAdapter(var context : Context, var searchResultCharacters : 
 
     fun addCharacters(characterList : List<SearchResultCharacter>){
 
-        //if this function stops working, add currentSize : Int to input parameters
-
         searchResultCharacters = characterList
-
-        //notifyItemRangeChanged(currentSize-1, searchResultCharacters.size)
-
         notifyDataSetChanged()
     }
+
+    fun emptyList(){
+        searchResultCharacters = kotlin.collections.emptyList()
+        notifyDataSetChanged()
+    }
+
 
     private fun checkIfFavorite(id : Int) : Boolean{
 
         var realm : Realm
-
         Realm.init(context)
 
         val config = RealmConfiguration.Builder()
