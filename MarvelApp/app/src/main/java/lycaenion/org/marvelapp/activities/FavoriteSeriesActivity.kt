@@ -10,15 +10,15 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmResults
 import lycaenion.org.marvelapp.R
-import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
-import lycaenion.org.marvelapp.recyclerViewAdapters.FavoriteCharactersViewAdapter
+import lycaenion.org.marvelapp.models.databaseModels.FavoriteSeries
+import lycaenion.org.marvelapp.recyclerViewAdapters.FavoriteSeriesViewAdapter
 
-class FavoriteCharactersActivity : AppCompatActivity() {
+class FavoriteSeriesActivity : AppCompatActivity() {
 
-    private lateinit var characterList : RealmResults<FavoriteCharacter>
-    private lateinit var adapter : FavoriteCharactersViewAdapter
+    private lateinit var seriesList : RealmResults<FavoriteSeries>
+    private lateinit var adapter : FavoriteSeriesViewAdapter
     private lateinit var recyclerView : RecyclerView
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var linearLayoutManager : LinearLayoutManager
 
     private lateinit var fabSearchCharacter : FloatingActionButton
     private lateinit var fabSearchSeries : FloatingActionButton
@@ -29,13 +29,13 @@ class FavoriteCharactersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_favorite_characters)
+        setContentView(R.layout.activity_favorite_series)
         initMenu()
 
         linearLayoutManager = LinearLayoutManager(this)
-        recyclerView = findViewById(R.id.favorite_characters_view)
+        recyclerView = findViewById(R.id.favorite_series_view)
         recyclerView.layoutManager = linearLayoutManager
-        fetchCharacters()
+        fetchSeries()
         //initAdapter()
     }
 
@@ -72,13 +72,9 @@ class FavoriteCharactersActivity : AppCompatActivity() {
         }
     }
 
-    private fun initAdapter(characterList : List<FavoriteCharacter>){
-        adapter = FavoriteCharactersViewAdapter(this, characterList)
-        recyclerView.adapter = adapter
-        adapter.notifyDataSetChanged()
-    }
 
-    private fun fetchCharacters(){
+
+    private fun fetchSeries(){
 
         Realm.init(this)
 
@@ -88,17 +84,24 @@ class FavoriteCharactersActivity : AppCompatActivity() {
             .build()
 
         var realm = Realm.getInstance(config)
-        characterList = realm.where(FavoriteCharacter::class.java).findAll()
+        seriesList = realm.where(FavoriteSeries::class.java).findAll()
 
-        initAdapter(characterList)
+        initAdapter(seriesList)
 
         adapter.notifyDataSetChanged()
-
         //realm.close()
+
     }
 
-    override fun onResume() {
+    override fun onResume(){
+
         super.onResume()
-        fetchCharacters()
+        fetchSeries()
+    }
+
+    private fun initAdapter(seriesList : List<FavoriteSeries>){
+        adapter = FavoriteSeriesViewAdapter(seriesList)
+        recyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 }

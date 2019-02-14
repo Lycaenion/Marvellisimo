@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import kotlinx.android.synthetic.main.layout_mini_listitem.view.*
-import lycaenion.org.marvelapp.OnItemClickListener
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.activities.SeriesActivity
-import lycaenion.org.marvelapp.models.Series
+import lycaenion.org.marvelapp.models.seriesModels.Series
 
 class CharacterSeriesViewAdapter(var context : Context, var characterSeriesList : List<Series>) : RecyclerView.Adapter<CharacterSeriesViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterSeriesViewAdapter.ViewHolder {
@@ -28,13 +27,13 @@ class CharacterSeriesViewAdapter(var context : Context, var characterSeriesList 
     override fun onBindViewHolder(viewHolder : ViewHolder, position: Int) {
         viewHolder.title.text = characterSeriesList[position].title
 
-        viewHolder.setOnItemClickListner(object : OnItemClickListener{
+        viewHolder.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int, view: View) {
 
                 println(characterSeriesList[position].title)
-                /*val intent = Intent(context, SeriesActivity::class.java)
+                val intent = Intent(context, SeriesActivity::class.java)
                 intent.putExtra("id", characterSeriesList[position].id)
-                context.startActivity(intent)*/
+                context.startActivity(intent)
             }
         })
     }
@@ -54,7 +53,7 @@ class CharacterSeriesViewAdapter(var context : Context, var characterSeriesList 
             itemView.setOnClickListener(this)
         }
 
-        fun setOnItemClickListner(itemClickListener: OnItemClickListener){
+        fun setOnItemClickListener(itemClickListener: OnItemClickListener){
             this.itemClickListener = itemClickListener
         }
 

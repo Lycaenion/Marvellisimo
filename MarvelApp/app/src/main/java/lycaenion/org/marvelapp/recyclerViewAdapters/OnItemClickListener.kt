@@ -1,4 +1,4 @@
-package lycaenion.org.marvelapp
+package lycaenion.org.marvelapp.recyclerViewAdapters
 
 import android.view.View
 

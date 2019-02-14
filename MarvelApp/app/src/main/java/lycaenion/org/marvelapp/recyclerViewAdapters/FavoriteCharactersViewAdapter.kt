@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,7 +11,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.layout_listitem.view.*
-import lycaenion.org.marvelapp.OnItemClickListener
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.activities.CharacterActivity
 import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
@@ -36,9 +34,8 @@ class FavoriteCharactersViewAdapter(var context: Context, var favoriteList : Lis
 
         viewHolder.characterName.text = favoriteList[position].name
 
-        viewHolder.favoriteIcon.visibility = View.VISIBLE
 
-        viewHolder.setOnclickListener(object : OnItemClickListener{
+        viewHolder.setOnclickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int, view: View) {
                 val intent = Intent(context, CharacterActivity::class.java)
                 intent.putExtra("id", favoriteList[position].id)
@@ -49,7 +46,7 @@ class FavoriteCharactersViewAdapter(var context: Context, var favoriteList : Lis
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener{
 
-        val characterName : TextView = view.search_character_name
+        val characterName : TextView = view.search_name
         val img : CircleImageView = view.search_thumbnail
         val favoriteIcon : ImageView = view.favorite_indicator
 

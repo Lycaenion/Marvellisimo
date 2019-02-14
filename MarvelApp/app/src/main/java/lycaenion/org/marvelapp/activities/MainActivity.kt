@@ -1,89 +1,70 @@
 package lycaenion.org.marvelapp.activities
 
+
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.NavigationView
+import android.support.v4.app.FragmentTransaction
+import android.support.v4.view.GravityCompat
+import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.RealmResults
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
+import lycaenion.org.marvelapp.FavoriteSeriesFragment
 
 import lycaenion.org.marvelapp.R
-import lycaenion.org.marvelapp.models.databaseModels.FavoriteCharacter
 
-class MainActivity : AppCompatActivity() {
-
-
+class MainActivity : AppCompatActivity(){
+    private lateinit var fabSearchCharacter : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabSearchSeries : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabAllCharacters : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabAllSeries : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabFavoriteCharacters : com.github.clans.fab.FloatingActionButton
+    private lateinit var fabFavoriteSeries : com.github.clans.fab.FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        //var realm : Realm
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*Realm.init(this)
+        initMenu()
+    }
 
-        val config = RealmConfiguration.Builder()
-            .schemaVersion(1)
-            .name("favoriteCharacters.realm")
-            .build()
+    private fun initMenu(){
 
+        fabSearchCharacter = findViewById(R.id.nav_search_character)
+        fabSearchSeries = findViewById(R.id.nav_search_series)
+        fabAllCharacters = findViewById(R.id.nav_all_characters)
+        fabAllSeries = findViewById(R.id.nav_all_series)
+        fabFavoriteCharacters = findViewById(R.id.nav_show_favorite_characters)
+        fabFavoriteSeries = findViewById(R.id.nav_show_favorite_series)
 
-        realm = Realm.getInstance(config)
-
-        var list : RealmResults<FavoriteCharacter> = realm.where(FavoriteCharacter::class.java).findAll()
-        //realm.close()
-
-        for( i in list.indices){
-            println(list[i]?.name + " is in favorite characters db")
-        }*/
-
-        fab.setOnClickListener{view ->
-            var intent = Intent(this, FavoriteCharactersActivity::class.java)
-            //intent.putExtra("id",1009546)
-            startActivity(intent)
+        fabSearchCharacter.setOnClickListener {
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
         }
 
+        fabSearchSeries.setOnClickListener {
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
 
+        fabAllCharacters.setOnClickListener {
+            startActivity(Intent(this, SearchCharacterActivity::class.java))
+        }
 
+        fabAllSeries.setOnClickListener {
+            startActivity(Intent(this, SearchSeriesActivity::class.java))
+        }
 
-
-        /*var adapter : CharactersViewAdapter
-
-        MarvelCharacterHandler.getAllCharacters().observeOn(AndroidSchedulers.mainThread()).subscribe{
-            data -> initRecyclerViw(this, data.data.results)
-            println(data.data.results.size)
-
-        }*/
-
-
-    }
-
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        fabFavoriteCharacters.setOnClickListener {
+            startActivity(Intent(this, FavoriteCharactersActivity::class.java))
+        }
+        fabFavoriteSeries.setOnClickListener {
+            startActivity(Intent(this, FavoriteSeriesActivity::class.java))
         }
     }
-
-    /*fun initRecyclerViw(context : Context, characters : Array<SearchResultCharacter>){
-        val recyclerView : RecyclerView = findViewById(R.id.character_recycler_view)
-        val adapter = CharactersViewAdapter(context, characters)
-        recyclerView.adapter  = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
-    }*/
 }

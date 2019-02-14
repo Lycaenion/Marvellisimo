@@ -10,18 +10,18 @@ import android.widget.SearchView
 import com.github.clans.fab.FloatingActionButton
 import io.reactivex.android.schedulers.AndroidSchedulers
 import lycaenion.org.marvelapp.R
-import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler
-import lycaenion.org.marvelapp.models.characterModels.SearchResultCharacter
-import lycaenion.org.marvelapp.recyclerViewAdapters.SearchCharactersViewAdapter
+import lycaenion.org.marvelapp.handlers.MarvelSeriesHandler
+import lycaenion.org.marvelapp.models.seriesModels.Series
 import lycaenion.org.marvelapp.recyclerViewAdapters.EndlessRecyclerViewScrollListener
+import lycaenion.org.marvelapp.recyclerViewAdapters.SearchSeriesViewAdapter
 
-class SearchCharacterActivity : AppCompatActivity() {
+class SearchSeriesActivity : AppCompatActivity() {
 
-    private var characterList : List<SearchResultCharacter> = emptyList()
-    private var searchString  = ""
-    private lateinit var scrollListener : EndlessRecyclerViewScrollListener
-    private lateinit var adapter : SearchCharactersViewAdapter
-    private lateinit var recyclerView: RecyclerView
+    private var seriesList : List<Series> = emptyList()
+    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private lateinit var adapter: SearchSeriesViewAdapter
+    private lateinit var recyclerView : RecyclerView
+    private var searchString = ""
     private lateinit var searchView : SearchView
     private lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -34,18 +34,13 @@ class SearchCharacterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_character)
-
+        setContentView(R.layout.activity_search_series)
         initMenu()
 
         linearLayoutManager = LinearLayoutManager(this)
-
-        recyclerView = findViewById(R.id.character_recycler_view)
-
+        recyclerView = findViewById(R.id.series_recycler_view)
         recyclerView.layoutManager = linearLayoutManager
-
-        searchView = findViewById(R.id.search_character)
-
+        searchView = findViewById(R.id.search_series)
         initAdapter()
         initScrollListener(linearLayoutManager)
         setTextListener()
@@ -82,17 +77,16 @@ class SearchCharacterActivity : AppCompatActivity() {
         fabFavoriteSeries.setOnClickListener {
             startActivity(Intent(this, FavoriteSeriesActivity::class.java))
         }
-
     }
 
     private fun setTextListener(){
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+
             override fun onQueryTextChange(newText: String): Boolean {
                 searchString = newText
                 adapter.emptyList()
-                addCharacters(0, searchString)
+                addSeries(0, searchString)
                 return false
-
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -103,18 +97,17 @@ class SearchCharacterActivity : AppCompatActivity() {
 
                 searchString = query!!
                 adapter.emptyList()
-                addCharacters(search = searchString)
+                addSeries(search = searchString)
                 return false
-
             }
         })
     }
 
     @SuppressLint("CheckResult")
     private fun initAdapter(){
-        MarvelCharacterHandler.getAllCharacters(0).observeOn(AndroidSchedulers.mainThread()).subscribe {
-                response -> characterList = characterList + response.data.results.asList()
-            adapter = SearchCharactersViewAdapter(this, characterList)
+        MarvelSeriesHandler.getAllSeries(0).observeOn(AndroidSchedulers.mainThread()).subscribe {
+                response -> seriesList = seriesList + response.data.results.asList()
+            adapter = SearchSeriesViewAdapter(this, seriesList)
             recyclerView.adapter = adapter
         }
     }
@@ -122,32 +115,32 @@ class SearchCharacterActivity : AppCompatActivity() {
     private fun initScrollListener(linearLayoutManager: LinearLayoutManager){
         scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager){
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                addCharacters(page * 20, searchString)
+                addSeries(page*20, searchString)
             }
         }
         recyclerView.addOnScrollListener(scrollListener)
     }
 
     @SuppressLint("CheckResult")
-    fun addCharacters(offset : Int = 10, search: String){
+    fun addSeries(offset : Int = 0, search: String){
 
-        if (offset == 0){
+        if(offset == 0){
 
             scrollListener.resetState()
             adapter.emptyList()
-            characterList = emptyList()
+            seriesList = emptyList()
 
         }
 
         if(search.isEmpty()){
-            MarvelCharacterHandler.getAllCharacters(offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
-                adapter.addCharacters(characterList)
+            MarvelSeriesHandler.getAllSeries(offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
+                adapter.addSeries(seriesList)
             }
-
         }else{
-            MarvelCharacterHandler.searchCharacter(search, offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> characterList = characterList + response.data.results.asList()
-                adapter.addCharacters(characterList)
+            MarvelSeriesHandler.searchSeries(searchString, offset).observeOn(AndroidSchedulers.mainThread()).subscribe { response -> seriesList = seriesList + response.data.results.asList()
+                adapter.addSeries(seriesList)
                 adapter.notifyDataSetChanged()
+
             }
         }
     }
