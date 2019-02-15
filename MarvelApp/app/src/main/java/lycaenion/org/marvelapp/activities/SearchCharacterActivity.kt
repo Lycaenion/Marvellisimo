@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.SearchView
 import com.github.clans.fab.FloatingActionButton
+
 import io.reactivex.android.schedulers.AndroidSchedulers
 import lycaenion.org.marvelapp.R
 import lycaenion.org.marvelapp.handlers.MarvelCharacterHandler

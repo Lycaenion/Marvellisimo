@@ -6,78 +6,80 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.SeriesActivity" android:id="@+id/relativeLayout2">
-    <TextView
-            android:text="@string/series_description"
-            android:layout_width="334dp"
-            android:layout_height="119dp"
-            android:id="@+id/series_description"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="62dp"
-            android:layout_alignParentStart="true" android:layout_alignParentEnd="true"
-            android:layout_marginStart="61dp"
-            android:layout_marginEnd="16dp" android:layout_alignTop="@+id/series_title"/>
-    <TextView
-            android:text="@string/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/series_title"
-            app:layout_constraintTop_toBottomOf="@+id/series_thumbnail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/series_description"
-            android:layout_alignParentStart="true"
-            android:layout_marginRight="150dp" android:layout_marginStart="0dp" android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp" android:layout_marginTop="215dp" android:layout_alignParentTop="true"/>
-    <ImageView
-            android:layout_width="139dp"
-            android:layout_height="107dp"
-            app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/series_thumbnail"
-            android:layout_marginTop="69dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/characters_in_series"
-            app:layout_constraintVertical_bias="0.091"
-            android:layout_marginEnd="140dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/thumbnail" android:layout_marginStart="125dp"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="1.0"
-            tools:ignore="NotSibling" android:layout_alignParentTop="true" android:layout_alignParentEnd="true"/>
     <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="0dp" android:layout_marginTop="13dp"
-            android:layout_below="@+id/series_description"
-    >
-        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp" android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp" android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true">
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="1000dp"
                         android:orientation="vertical">
 
+            <TextView
+                    android:text="@string/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/series_title"
+                    app:layout_constraintTop_toBottomOf="@+id/series_thumbnail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="30sp"
+                    android:layout_marginRight="150dp" android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp" android:layout_marginTop="23dp"
+                    android:layout_below="@+id/series_thumbnail"/>
+            <TextView
+                    android:text="@string/series_description"
+                    android:layout_width="334dp"
+                    android:layout_height="119dp"
+                    android:id="@+id/series_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="31dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="37dp" android:layout_below="@+id/series_title"
+                    android:layout_alignParentStart="true" android:layout_alignParentEnd="true"/>
+            <ImageView
+                    android:layout_width="144dp"
+                    android:layout_height="180dp"
+                    app:srcCompat="@mipmap/ic_launcher"
+                    android:id="@+id/series_thumbnail"
+                    android:layout_marginTop="26dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/characters_in_series"
+                    app:layout_constraintVertical_bias="0.0"
+                    android:layout_marginEnd="133dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/thumbnail" android:layout_marginStart="134dp"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                    tools:ignore="NotSibling" android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" android:layout_alignParentStart="true"/>
             <Button
                     android:text="@string/add_to_favorites"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/add_favorite_btn" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="42dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/characters_in_series"
-                    app:layout_constraintVertical_bias="0.741" android:layout_marginStart="245dp"
+                    app:layout_constraintVertical_bias="0.741"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="1.0"
-                    android:layout_alignParentEnd="true" android:layout_alignParentStart="true"/>
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/series_description" android:layout_toEndOf="@+id/wiki_button"
+                    android:layout_marginStart="69dp"/>
             <Button
                     android:text="@string/learn_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/wiki_button"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="49dp"
+                    android:layout_marginStart="40dp"
                     android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toTopOf="@+id/characters_in_series"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="51dp"
                     app:layout_constraintVertical_bias="0.741"
                     android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.108" android:layout_alignParentStart="true"/>
+                    app:layout_constraintHorizontal_bias="0.108" android:layout_alignParentStart="true"
+                    android:layout_below="@+id/series_description"/>
 
 
             <TextView
@@ -85,23 +87,25 @@
                     android:layout_width="389dp"
                     android:layout_height="41dp"
                     android:id="@+id/text_characters_header" android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/characters_in_series" android:layout_marginTop="68dp"
+                    app:layout_constraintBottom_toTopOf="@+id/characters_in_series" android:layout_marginTop="126dp"
                     app:layout_constraintTop_toBottomOf="@+id/wiki_button" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="17dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="10dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="11dp"
                     app:layout_constraintVertical_bias="0.0" app:layout_constraintHorizontal_bias="0.493"
-                    android:layout_alignParentTop="true" android:layout_alignParentStart="true"/>
+                    android:layout_alignParentStart="true" android:layout_below="@+id/series_description"
+                    android:layout_alignParentEnd="true"/>
 
             <android.support.v7.widget.RecyclerView
                     android:layout_width="363dp"
-                    android:layout_height="218dp" android:layout_marginTop="21dp"
+                    android:layout_height="400dp"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintVertical_bias="1.0"
                     android:id="@+id/characters_in_series" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="22dp" android:layout_below="@+id/text_characters_header"
-                    android:layout_alignParentEnd="true"/>
+                    android:layout_marginEnd="16dp"
+                    android:layout_alignParentEnd="true" android:layout_marginTop="194dp"
+                    android:layout_below="@+id/series_description"/>
         </RelativeLayout>
 
     </ScrollView>
