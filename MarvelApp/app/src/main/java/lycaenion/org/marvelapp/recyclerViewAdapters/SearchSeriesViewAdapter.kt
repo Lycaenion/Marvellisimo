@@ -49,9 +49,7 @@ class SearchSeriesViewAdapter (var context : Context, var searchResultSeries : L
         viewHolder.title.text = searchResultSeries[position].title
 
         if(checkIfFavorite(searchResultSeries[position].id)){
-            Glide.with(context)
-                .load(R.drawable.ic_favorite_heart)
-                .into(viewHolder.favoriteIcon)
+            viewHolder.favoriteIcon.visibility = View.VISIBLE
         }else{
             viewHolder.favoriteIcon.visibility = View.INVISIBLE
         }

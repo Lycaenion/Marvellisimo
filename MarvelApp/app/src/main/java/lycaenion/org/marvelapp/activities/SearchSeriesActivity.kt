@@ -144,4 +144,12 @@ class SearchSeriesActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if(!seriesList.isEmpty()){
+            adapter.notifyDataSetChanged()
+        }
+    }
+
 }

@@ -49,6 +49,7 @@
                 android:id="@+id/favorite_indicator"
                 android:contentDescription="@string/indicator_that_the_character_is_a_string_add_to_favorites"
                 android:layout_marginTop="8dp"
+                android:src="@drawable/ic_favorite_heart"
                 card_view:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"

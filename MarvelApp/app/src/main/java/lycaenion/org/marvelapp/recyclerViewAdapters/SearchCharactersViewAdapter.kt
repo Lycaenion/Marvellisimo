@@ -50,9 +50,9 @@ class SearchCharactersViewAdapter(var context : Context, var searchResultCharact
         viewHolder.imageName.text = searchResultCharacters[position].name
 
         if(checkIfFavorite(searchResultCharacters[position].id)){
-            Glide.with(context)
-                .load(R.drawable.ic_favorite_heart)
-                .into(viewHolder.favoriteIcon)
+            viewHolder.favoriteIcon.visibility = View.VISIBLE
+        }else{
+            viewHolder.favoriteIcon.visibility = View.INVISIBLE
         }
 
         viewHolder.setOnItemClickListener(object : OnItemClickListener {

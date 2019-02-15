@@ -152,4 +152,12 @@ class SearchCharacterActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if(!characterList.isEmpty()){
+            adapter.notifyDataSetChanged()
+        }
+
+    }
 }
