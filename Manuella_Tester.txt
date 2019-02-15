@@ -1,0 +1,414 @@
+#######################################################################################
+							MANUELLA TESTER
+Testets nummer syftar på vilken userstory som testats. Testen står här i 
+nummerordning, förutom nummer 7 som kommer först eftersom det behandlar menyn.
+Övriga tester är kopplade till nummer 7 på ett eller annat vis så därför utfördes 
+det först.
+
+Följande tester har utförts ett flertal gånger på flera olika serier och karaktärer men 
+har generaliserats för underlätta återskapning av testerna
+
+#######################################################################################
+SETUP för alla test om inget annat anges : 
+
+	Starta appen. 
+	MainActivity körs
+
+#######################################################################################
+Userstory 7
+
+1. Tryck på fab-knappen   
+	Förväntat resultat: 6 mindre fab-knappar med symboler och etiketter dyker upp 
+	i vertikal riktning
+	Faktiskt resultat: 6 mindre fab-knappar med symboler och etiketter dyker upp 
+	i vertikal riktning
+	Resultat: Godkänd
+2. Tryck på fab-knappen med etikett 'All Characters' 
+	Förväntat resultat : aktivitiet SearchCharacterActivity startas och fab-menyn finns
+	Faktiskt resultat : aktivitet SearchCharacterActivity startade och fab-menyn finns
+	Resultat : Godkänd
+3. Tryck på back-pilen för att återgå till ursprungsläge (MainActivity)
+4. Repetera 1
+5. Tryck på fab-knappen med etikett 'Search Characters'
+	Förväntat resultat : aktivitiet SearchCharacterActivity startas och fab-menyn finns
+	Faktiskt resultat : aktivitet SearchCharacterActivity startade och fab-menyn finns
+	Resultat : Godkänd
+6. Repetera 3
+7. Repetera 1
+8. Tryck på fab-knappen med etikett 'Favorite Characters'
+	Förväntat resultat : aktivitiet FavoriteCharactersActivity startas och fab-menyn finns
+	Faktiskt resultat : aktivitet FavoriteCharactersActivity startade och fab-menyn finns
+	Resultat : Godkänd
+9. Repetera 3
+10.Repetera 1
+11.Tryck på fab-knappen med etikett 'All Series'
+	Förväntat resultat : aktivitiet SearchSeriesActivity startas och fab-menyn finns
+	Faktiskt resultat : aktivitet SearchSeriesActivity startade och fab-menyn finns
+	Resultat : Godkänd
+12.Repetera 3
+13.Repetera 1
+14.Tryck på fab-knappen med etikett 'Search Series'
+	Förväntat resultat : aktivitiet SearchSeriesActivity startas och fab-menyn finns
+	Faktiskt resultat : aktivitet SearchSeriesActivity startade och fab-menyn finns
+	Resultat : Godkänd
+15.Repetera 3
+16.Repetera 1
+17.Tryck på fab-knappen med etikett 'Favorite Series'
+	Förväntat resultat : aktivitiet FavoriteSeriesActivity startas och fab-menyn finns
+	Faktiskt resultat : aktivitet FavoriteSeriesActivity startade och fab-menyn finns
+	Resultat : Godkänd 
+18.Repetera 3
+
+Test avslutat
+(OBS! Detta test har repeterats för varje meny hos de enskilda aktiviteterna, 
+ med modifikation att utgångsaktiviteten har ersatt MainActivity)
+#######################################################################################
+Userstory 1
+
+1.Utför steg 1 & 2 från userstory 7
+	Förväntat resultat: aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer från Marvel finns
+	Faktiskt resultat : aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer från Marvel finns
+	Reslutat: Godkänd (OBS! Det tar några sekunder innan listan med karaktärer laddas in)
+2.Svep med fingret/muspekaren för att skrolla i listan med karaktärer 
+	Förväntat resultat: Listan med karaktärer fortsätter och visar alla karatärer i alfabetisk ordning 
+	Faktiskt resultat: Listan med karaktärer fortsätter och visar alla karatärer i alfabetisk ordning 
+	Resultat: Godkänd (OBS! Efter var 20:e karaktär behöver listan några sekunder för att läsa in nästa 20
+		20 karaktärer)
+
+Test avslutat
+#######################################################################################
+Userstory 2
+
+1.Utför steg 1 & 2 från userstory 7
+	Förväntat resultat: aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns
+	Faktiskt resultat : aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns
+	Reslutat: Godkänd (OBS! Det tar några sekunder innan listan med karaktärer laddas in)
+2.Svep med fingret/muspekaren för att skrolla i listan med karaktärer 
+	Förväntat resultat: Listan med karaktärer fortsätter och visar alla karatärer i alfabetisk ordning 
+	Faktiskt resultat: Listan med karaktärer fortsätter och visar alla karatärer i alfabetisk ordning 
+	Resultat: Godkänd (OBS! Efter var 20:e karaktär behöver listan några sekunder för att läsa in nästa 20
+		20 karaktärer)
+3.Tryck på valfri karaktär
+	Förväntat resultat: aktivitet CharacterActivity startas och följande syns:
+		-Karakärens bild
+		-Karakärens namn
+		-Karakärens beskrivning (om det finns någon, om inte står det "no description available" istället
+		-Knapp Learn more (om det inte går att lära sig mer om karaktären saknas knappen)
+		-Knapp Add to favorites(Om karaktären redan är tillagd i favoriter finns knapp Remove from favorites istället)
+		-En lista över serier som karakären medverkar i
+	Faktiskt resultat:aktivitet CharacterActivity startas och följande syns:
+		-Karakärens bild
+		-Karakärens namn
+		-Karakärens beskrivning (om det finns någon, om inte står det "no description available" istället
+		-Knapp Learn more (om det inte går att lära sig mer om karaktären saknas knappen)
+		-Knapp Add to favorites(Om karaktären redan är tillagd i favoriter finns knapp Remove from favorites istället)
+		-En lista över serier som karakären medverkar in
+	Resultat: Godkänd
+4. Tryck på back-pilen för att gå tillbaka till listan med karaktärer
+	Förväntat resultat: aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns
+	Faktiskt resultat : aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns
+	Reslutat: Godkänd (OBS! Det tar några sekunder innan listan med karaktärer laddas in)
+	
+Test avslutat
+#######################################################################################
+Userstory 3
+
+1.Utför steg 1 & 11 från userstory 7
+	Förväntat resultat: aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	Faktiskt resultat : aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier(varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	Reslutat: Godkänd (OBS! Det tar några sekunder innan listan med serier laddas in)
+2.Svep med fingret/muspekaren för att skrolla i listan med serier
+	Förväntat resultat: Listan med serier fortsätter och visar alla serier i alfabetisk ordning 
+	Faktiskt resultat: Listan med serier fortsätter och visar alla serier i alfabetisk ordning 
+	Resultat: Godkänd (OBS! Efter var 20:e serie behöver listan några sekunder för att läsa in nästa 20
+		serier)
+
+Test avslutat		
+#######################################################################################
+Userstory 4
+
+1.Utför steg 1 & 11 från userstory 7
+	Förväntat resultat: aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	Faktiskt resultat : aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	Reslutat: Godkänd (OBS! Det tar några sekunder innan listan med serier laddas in)
+2.Svep med fingret/muspekaren för att skrolla i listan med serier 
+	Förväntat resultat: Listan med serier fortsätter och visar alla serier i alfabetisk ordning 
+	Faktiskt resultat: Listan med serier fortsätter och visar alla serier i alfabetisk ordning 
+	Resultat: Godkänd (OBS! Efter var 20:e serie behöver listan några sekunder för att läsa in nästa 20
+		20 serier)
+3.Tryck på valfri serie
+	Förväntat resultat: aktivitet SeriesActivity startas och följande syns:
+		-Seriens bild
+		-Seriens namn
+		-Seriens beskrivning (om det finns någon, om inte står det "no description available" istället
+		-Knapp Learn more (om det inte går att lära sig mer om serien saknas knappen)
+		-Knapp Add to favorites(Om serien redan är tillagd i favoriter finns knapp Remove from favorites istället)
+		-En lista över vilka karaktärer som medverkar i serien
+	Faktiskt resultat:aktivitet SeriesActivity startas och följande syns:
+		-Seriens bild
+		-Seriens namn
+		-Seriens beskrivning (om det finns någon, om inte står det "no description available" istället
+		-Knapp Learn more (om det inte går att lära sig mer om serien saknas knappen)
+		-Knapp Add to favorites(Om serien redan är tillagd i favoriter finns knapp Remove from favorites istället)
+		-En lista över vilka karaktärer som medverkar i serien
+	Resultat: Godkänd
+4.Tryck på back för att gå tillbaka till listan med serier
+	Förväntat resultat: aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	Faktiskt resultat : aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	Reslutat: Godkänd (OBS! Det tar några sekunder innan listan med serier laddas in)
+	
+Test avslutat
+#######################################################################################
+Userstory 5
+
+1.Utför steg 1 & 5 från userstory 7
+	Förväntat resultat: aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns
+	Faktiskt resultat : aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns
+	Reslutat: Godkänd (OBS! Det tar några sekunder innan listan med karaktärer laddas in)
+2.Tryck på förstoringsglaset ovanför listan med karaktärer
+	Förväntat resultat: tangentbord kommer fram och det blir möjligt att skriva i sökfältet
+	Faktiskt reslutat: tangentbordet kommer fram och det går att mata in text i sökfältet
+	Reslutat: Godkänd
+3.Skriv i sökfältet
+	Förväntat resultat: varje gång användaren matar in en bokstav i sökfältet uppdateras listan med karaktärer
+	med karaktärer med namn som matchar inmatningen
+	Faktiskt resultat: listan uppdateras med karaktärer som matchar inmatningen i sökfältet, bokstav för bokstav
+	Reslutat: Godkänd
+(Valfritt!)Utför steg 3 från userstory 2 för att få mer information om karaktären användaren sökt efter
+4a.Använd backspace för att rensa sökfältet
+	Förväntat reslutat: sökfältet töms bokstav för bokstav och listan med sökresultat uppdateras därefter. Vid tomt 
+		sökfält laddas listan med alla karaktärer in
+	Faktiskt reslutat: sökfältet töms bokstav för bokstav och listan med sökresultat uppdateras därefter. Vid tomt 
+		sökfält laddas listan med alla karaktärer in
+	Reslutat: Godkänd
+4b.Tryck på 'x' för att avsluta sökningen
+	Förväntat resultat: sökfältet stängs och lista över alla karaktärer laddas in
+	Faktiskt resultat: sökfältet stängs och lista över alla karaktärer laddas in
+	Reslutat: Godkänd
+
+Test avslutat
+#######################################################################################
+Userstory 6
+
+1.Utför steg 1 & 14 från userstory 7
+	Förväntat resultat: aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	Faktiskt resultat : aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	Reslutat: Godkänd (OBS! Det tar några sekunder innan listan med serier laddas in)
+2.Tryck på förstoringsglaset ovanför listan med serier
+	Förväntat resultat: tangentbord kommer fram och det blir möjligt att skriva i sökfältet
+	Faktiskt reslutat: tangentbordet kommer fram och det går att mata in text i sökfältet
+	Reslutat: Godkänd
+3.Skriv i sökfältet
+	Förväntat resultat: varje gång användaren matar in en bokstav i sökfältet uppdateras listan med serier
+	med serier med namn som matchar inmatningen
+	Faktiskt resultat: listan uppdateras med serier som matchar inmatningen i sökfältet, bokstav för bokstav
+	Reslutat: Godkänd
+(Valfritt!)Utför steg 3 från userstory 4 för att få mer information om serien användaren sökt efter
+4a.Använd backspace för att rensa sökfältet
+	Förväntat reslutat: sökfältet töms bokstav för bokstav och listan med sökresultat uppdateras därefter. Vid tomt 
+		sökfält laddas listan med alla serier in
+	Faktiskt reslutat: sökfältet töms bokstav för bokstav och listan med sökresultat uppdateras därefter. Vid tomt 
+		sökfält laddas listan med alla serier in
+	Reslutat: Godkänd
+4b.Tryck på 'x' för att avsluta sökningen
+	Förväntat resultat: sökfältet stängs och lista över alla serier laddas in
+	Faktiskt resultat: sökfältet stängs och lista över alla serier laddas in
+	Reslutat: Godkänd	
+	
+Test avslutat
+#######################################################################################
+Userstory 8
+
+1. Utför steg 1-3 från userstory 2
+2. Scrolla i listan under titeln "series where (karaktärens namn) appears" för att se vilka serier
+	karaktären är med i
+	Förväntat resultat: Listan innehåller alla serier som karaktären är med i
+	Faktiskt reslutat: Listan innehåller alla serier som karaktären är med i
+		(OBS 1: Det kan ta några sekunder att ladda in listan. Om karaktären inte är med i några serier är listan tom)
+		(OBS 2: Om listan är längre än 20 serier behöver den några extra sekunder för att ladda in fler serier efter den 20e serien)
+	Reslutat: Godkänd
+	
+Test avslutat
+#######################################################################################
+Userstory 9
+
+1. Utför steg 1-3 från userstory 4
+2. Scrolla i listan under titeln "Characters that appears in (seriens namn)" för att se vilka karaktärer
+	som är med i serien
+	Förväntat resultat: Listan innehåller alla karaktärer som är med i serien
+	Faktiskt reslutat: Listan innehåller alla karaktärer som är med i serien
+		(OBS 1: Det kan ta några sekunder att ladda in listan. Om inga karaktärer är med i seriern är listan tom)
+		(OBS 2: Om listan är längre än 20 karaktärer behöver den några extra sekunder för att ladda in fler karaktärer efter den 20e karaktären)
+	Reslutat: Godkänd
+	
+Test avslutat
+#######################################################################################
+Userstory 15a
+
+(För karakär som inte redan är favoritmarkerad av andvändaren)
+1.Utför steg 1-3 från userstory 2 (alt. utför steg 1-3 från userstory 7 + det valfria steget)
+2.Tryck på "Add to favorites"
+	Förväntat reslutat: Knappens text ändras till "Remove from favorites" för att indiktera att karaktären
+		har lagts till i favoritlistan
+	Faktiskt resultat:Knappens text ändras till "Remove from favorites"
+	Reslutat: Godkänd
+3.Tryck på back-pilen för att komma tillbaka till listan med karaktärer
+	Förväntat resultat: aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns samt
+	karaktärer som lagts till i favoriter har ett hjärta bredvid sitt namn 
+	Faktiskt resultat : aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns
+	och karaktären som precis markerats som favorit har ett hjärta bredvid sitt namn
+
+Test avslutat 
+************************
+Userstory 15a
+
+(För karakär som redan är favoritmarkerad av andvändaren)
+1.Utför steg 1-3 från userstory 2 (alt. utför steg 1-3 från userstory 7 + det valfria steget)
+2.Tryck på "Remove from favorites"
+	Förväntat reslutat: Knappens text ändras till "Add to favorites" för att indiktera att karaktären
+		har tagits bort från favoritlistan
+	Faktiskt resultat:Knappens text ändras till "Add to favorites"
+	Reslutat: Godkänd
+3.Tryck på back-pilen för att komma tillbaka till listan med karaktärer
+	Förväntat resultat: aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns samt
+	karaktärer som lagts till i favoriter har ett hjärta bredvid sitt namn 
+	Faktiskt resultat : aktivitiet SearchCharacterActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med karaktärer (varje karaktär har ett eget "kort" med bild och namn) från Marvel finns
+	och karaktären som precis tagits bort från favoriter har inget hjärta bredvid sitt namn
+	Reslutat: Godkänd
+
+Test avslutat
+#######################################################################################
+Userstory 16a
+
+(För serie som inte redan är favoritmarkerad av andvändaren)
+1.Utför steg 1-3 från userstory 4 (alt. steg 1-3 från userstory 6 + det valfria steget)
+2.Tryck på "Add to favorites"
+	Förväntat reslutat: Knappens text ändras till "Remove from favorites" för att indiktera att serien
+		har lagts till i favoritlistan
+	Faktiskt resultat: Knappens text ändras till "Remove from favorites"
+	Reslutat: Godkänd
+3.Tryck på back-pilen för att komma tillbaka till listan med serier
+	Förväntat resultat: aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns samt
+	serier som lagts till i favoriter har ett hjärta bredvid sitt namn 
+	Faktiskt resultat : aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	och serien som precis markerats som favorit har ett hjärta bredvid sitt namn
+	Reslutat: Godkänd
+
+Test avslutat 
+************************
+Userstory 16b
+
+(För serie som redan är favoritmarkerad av andvändaren)
+1.Utför steg 1-3 från userstory 4 (alt. steg 1-3 från userstory 6 + det valfria steget)
+2.Tryck på "Add to favorites"
+	Förväntat reslutat: Knappens text ändras till "Remove from favorites" för att indiktera att serien
+		har lagts till i favoritlistan
+	Faktiskt resultat: Knappens text ändras till "Remove from favorites"
+	Reslutat: Godkänd
+3.Tryck på back-pilen för att komma tillbaka till listan med serier
+	Förväntat resultat: aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns samt
+	serier som lagts till i favoriter har ett hjärta bredvid sitt namn 
+	Faktiskt resultat : aktivitiet SearchSeriesActivity startas, fab-menyn finns, Sökfält finns 
+	och lista med serier (varje serie har ett eget "kort" med bild och namn) från Marvel finns
+	och serien som precis markerats som favorit har ett hjärta bredvid sitt namn
+	Reslutat: Godkänd
+
+Test avslutat
+#######################################################################################
+Userstory 17
+
+1.Utför steg 1 och 8 från userstory 7
+	Förväntat reslutat: FavoriteCharactersActivity startas och en lista med favoritkaraktärer
+		laddas in. Varje karaktär har ett eget "kort" med bild och namn.
+	Faktiskt reslutat: FavoriteCharactersActivity startas och en lista med favoritkaraktärer
+		laddas in. Varje karaktär har ett eget "kort" med bild och namn.
+	Reslutat: Godkänd
+(Valfritt) Tryck på en karaktär för att få mer information om den (se steg 3 från userstory 2)
+
+Test avslutat
+#######################################################################################
+Userstory 18
+
+1.Utför steg 1 och 8 från userstory 7
+	Förväntat reslutat: FavoriteSeriesActivity startas och en lista med favoritserier
+		laddas in. Varje serie har ett eget "kort" med bild och namn.
+	Faktiskt reslutat: FavoriteCharactersActivity startas och en lista med favoritkaraktärer
+		laddas in. Varje serie har ett eget "kort" med bild och namn.
+	Reslutat: Godkänd
+(Valfritt) Tryck på en serie för att få mer information om den (se steg 3 från userstory 4)
+
+Test avslutat
+#######################################################################################
+Userstory 23
+
+1. Utför steg 3 från userstory 2
+	Förväntat resultat: aktivitet CharacterActivity startas och följande syns:
+		-Karakärens bild
+		-Karakärens namn
+		-Karakärens beskrivning (om det finns någon, om inte står det "no description available" istället
+		-Knapp Learn more (om det inte går att lära sig mer om karaktären saknas knappen)
+		-Knapp Add to favorites(Om karaktären redan är tillagd i favoriter finns knapp Remove from favorites istället)
+		-En lista över serier som karakären medverkar i
+	Faktiskt resultat:aktivitet CharacterActivity startas och följande syns:
+		-Karakärens bild
+		-Karakärens namn
+		-Karakärens beskrivning (om det finns någon, om inte står det "no description available" istället
+		-Knapp Learn more (om det inte går att lära sig mer om karaktären saknas knappen)
+		-Knapp Add to favorites(Om karaktären redan är tillagd i favoriter finns knapp Remove from favorites istället)
+		-En lista över serier som karakären medverkar in
+	Resultat: Godkänd
+2. Tryck på knapp "Learn more" om den finns
+	Förväntat resultat: Enhetens webbläsare öppnas med en länk till en officiell webbsida med mer information om karaktären
+	Faktiskt reslutat: Enhetens webbläsare öppnas med en länk till en officiell webbsida med mer information om karaktären
+	Reslutat: Godkänd
+	
+Test avslutat
+#######################################################################################
+Userstory 24
+
+1. Utför steg 3 från userstory 4
+	Förväntat resultat: aktivitet SeriesActivity startas och följande syns:
+		-Seriens bild
+		-Seriens namn
+		-Seriens beskrivning (om det finns någon, om inte står det "no description available" istället
+		-Knapp Learn more (om det inte går att lära sig mer om serien saknas knappen)
+		-Knapp Add to favorites(Om serien redan är tillagd i favoriter finns knapp Remove from favorites istället)
+		-En lista över vilka karaktärer som medverkar i serien
+	Faktiskt resultat:aktivitet SeriesActivity startas och följande syns:
+		-Seriens bild
+		-Seriens namn
+		-Seriens beskrivning (om det finns någon, om inte står det "no description available" istället
+		-Knapp Learn more (om det inte går att lära sig mer om serien saknas knappen)
+		-Knapp Add to favorites(Om serien redan är tillagd i favoriter finns knapp Remove from favorites istället)
+		-En lista över vilka karaktärer som medverkar i serien
+	Resultat: Godkänd
+2. Tryck på knapp "Learn more" om den finns
+	Förväntat resultat: Enhetens webbläsare öppnas med en länk till en officiell webbsida med mer information om serien
+	Faktiskt reslutat: Enhetens webbläsare öppnas med en länk till en officiell webbsida med mer information om serien
+	Reslutat: Godkänd
+
+Test avslutat
+#######################################################################################
