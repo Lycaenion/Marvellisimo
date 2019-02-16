@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/parent_layout"
+        android:padding="3dp"
+        tools:elevation="0dp"
+        card_view:cardCornerRadius="6dp"
+        card_view:contentPadding="2dp"
+        card_view:cardElevation="6dp" android:layout_marginTop="5dp" android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp" android:layout_marginBottom="5dp">
+
+
+    <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
+        <de.hdodenhof.circleimageview.CircleImageView android:layout_width="118dp"
+                                                      android:layout_height="103dp"
+                                                      android:id="@+id/search_thumbnail"
+                                                      android:src="@mipmap/ic_launcher"
+                                                      android:layout_marginStart="8dp"
+                                                      card_view:layout_constraintStart_toStartOf="parent"
+                                                      android:layout_marginTop="8dp"
+                                                      card_view:layout_constraintTop_toTopOf="parent"
+                                                      android:layout_marginBottom="8dp"
+                                                      card_view:layout_constraintBottom_toBottomOf="parent"
+                                                      card_view:layout_constraintEnd_toEndOf="parent"
+                                                      android:layout_marginEnd="8dp"
+                                                      card_view:layout_constraintHorizontal_bias="0.0"
+                                                      card_view:layout_constraintVertical_bias="0.518"/>
+        <TextView android:layout_width="207dp"
+                  android:layout_height="67dp"
+                  android:text="@string/searchCharacterName"
+                  android:id="@+id/search_name"
+                  android:textColor="#000"
+                  android:layout_centerVertical="true"
+                  android:textSize="18sp"
+                  card_view:layout_constraintStart_toEndOf="@+id/search_thumbnail"
+                  android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                  card_view:layout_constraintEnd_toStartOf="@+id/favorite_indicator" android:layout_marginTop="8dp"
+                  card_view:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                  card_view:layout_constraintBottom_toBottomOf="parent"
+                  card_view:layout_constraintHorizontal_bias="0.666"/>
+        <ImageView
+                android:layout_width="43dp"
+                android:layout_height="37dp"
+                android:id="@+id/favorite_indicator"
+                android:contentDescription="@string/indicator_that_the_character_is_a_string_add_to_favorites"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_favorite_heart"
+                card_view:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                card_view:layout_constraintVertical_bias="0.511"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
